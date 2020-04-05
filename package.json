@@ -1,0 +1,17 @@
+{
+  "name": "eleventy-blog",
+  "version": "1.0.0",
+  "description": "Simple blog with 11ty",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx eleventy",
+    "serve": "npx eleventy --serve",
+    "debug": "DEBUG=* npx eleventy"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@11ty/eleventy": "^0.10.0"
+  }
+}
