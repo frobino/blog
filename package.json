@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx eleventy",
-    "serve": "npx eleventy --serve",
+    "build": "npx eleventy --formats=md,html,png",
+    "serve": "npx eleventy --serve --formats=md,html,png",
     "debug": "DEBUG=* npx eleventy"
   },
   "author": "",
