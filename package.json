@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx eleventy --formats=md,html,png",
-    "serve": "npx eleventy --serve --formats=md,html,png",
+    "build": "npx eleventy --formats=md,njk,png",
+    "serve": "npx eleventy --serve --formats=md,njk,png",
     "debug": "DEBUG=* npx eleventy"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^0.10.0"
+    "@11ty/eleventy": "^0.10.0",
+    "@11ty/eleventy-navigation": "^0.1.5",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
+    "luxon": "^1.23.0"
   }
 }
