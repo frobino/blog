@@ -55,7 +55,7 @@ tags, tags-lisk.njk:
 
 ## References
 
-- A more advanced startup point should be: [eleventy-base-blog](https://github.com/11ty/eleventy-base-blog.
+- A more advanced startup point should be: [eleventy-base-blog](https://github.com/11ty/eleventy-base-blog).
 
 ## TODO
 
