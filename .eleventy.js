@@ -24,6 +24,13 @@ module.exports = function(eleventyConfig) {
   // CSS:
   eleventyConfig.addPassthroughCopy("css");
 
+  // JS dependencies and JS scripts for posts:
+  eleventyConfig.addPassthroughCopy("posts/**/*.js");
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/chart.js/dist/Chart.min.css" : "assets/Chart.min.css",
+    "node_modules/chart.js/dist/Chart.min.js" : "assets/Chart.min.js"
+  });
+
   // Get the first `n` elements of a collection. Used in index.njk
   eleventyConfig.addFilter("head", (array, n) => {
     if( n < 0 ) {

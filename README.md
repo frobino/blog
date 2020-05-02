@@ -2,7 +2,10 @@
 
 This simple tutorial has been inspired by [1], [2], [3]
 
-The commit history shows how to setup a 11ty project and how to add pages in form of markdown.
+The commit history shows how to:
+- setup a 11ty project
+- add pages and blog posts in form of markdown
+- embed JS script in blog posts using a Node JS module (e.g. ChartJS). See [7], [8]
 
 ## Steps
 
@@ -64,9 +67,6 @@ tags, tags-lisk.njk:
   - See [4]
 - Search in site currently implemented with DuckDuckGo searchbox. Improve if needed:
   - See [5], [6]
-- Show how to embed a script using a Node JS module (e.g. ChartJS).
-  - See [7], [8]
-  - This will be useful to later on embed Phaser based examples.
 
 [1]: https://www.filamentgroup.com/lab/build-a-blog/  
 [2]: https://keepinguptodate.com/pages/2019/06/creating-blog-with-eleventy/  
