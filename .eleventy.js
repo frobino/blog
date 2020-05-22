@@ -31,6 +31,9 @@ module.exports = function(eleventyConfig) {
     "node_modules/chart.js/dist/Chart.min.js" : "assets/Chart.min.js"
   });
 
+  // Images for posts
+  eleventyConfig.addPassthroughCopy("posts/**/*.png");
+
   // Get the first `n` elements of a collection. Used in index.njk
   eleventyConfig.addFilter("head", (array, n) => {
     if( n < 0 ) {

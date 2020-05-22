@@ -21,6 +21,8 @@ Host the static content:
 
     npm run serve
 
+NOTE: only md and njk are currenly used to generate static content. See package.json serve rule.
+
 ## Project structure
 
 _11ty:
@@ -32,19 +34,18 @@ _data:
 _includes:
 - layouts in njk format
 
-about:
-- a simple separate page: using md syntax
-
 css:
 - makeup
+
+pages:
+- contains extra pages
+- about: a simple separate page using md syntax
+- archive: a more complex separate page using njk extra syntax
 
 posts:
 - posts in md format linking to the njk layout
 - posts.json: this file will apply the data inside to all of the files in our posts folder.  
   We could add this info in each post.md file in the --- header and remove the json file if preferred.
-
-archive.njk:
-- a more complex separate page: using njk extra syntax
 
 index.njk:
 - main (home) page: using njk extra syntax
