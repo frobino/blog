@@ -5,23 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ renderData.title or title or metadata.title }}</title>
     <meta name="Description" content="{{ renderData.description or description or metadata.description }}">
-    <link rel="stylesheet" href="{{ '/css/index.css' | url }}">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="{{ '/css/custom.css' | url }}">
+    <!-- custom css used for eleventy language plugin -->
     <link rel="stylesheet" href="{{ '/css/prism-base16-monokai.dark.css' | url }}">
     <link rel="alternate" href="{{ metadata.feed.path | url }}" type="application/atom+xml" title="{{ metadata.title }}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
   </head>
-  <body>
-    <header>
-      <h1 class="home"><a href="{{ '/' | url }}">{{ metadata.title }}</a></h1>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
 
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <nav class="w3-top w3-hide-small w3-bar w3-black w3-center">
+      <a href="{{ '/' | url }}" class="w3-bar-item w3-button">{{ metadata.title }}</a>
+      <div class="w3-right w3-hide-small">
+        {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
+        {%- for entry in collections.all | eleventyNavigation %}
+        <a href="{{ entry.url | url }}" class="w3-bar-item w3-button">{{ entry.title}}</a>
+        {%- endfor %}
+      </div>
+    </nav>
+
+    <!-- Navbar on small screens (Hidden on medium and large screens) -->
+    <div class="w3-top w3-hide-large w3-hide-medium">
+      <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
       {#- Read more about `eleventy-navigation` at https://www.11ty.dev/docs/plugins/navigation/ #}
       <ul class="nav">
       {%- for entry in collections.all | eleventyNavigation %}
-        <li class="nav-item{% if entry.url == page.url %} nav-item-active{% endif %}"><a href="{{ entry.url | url }}">{{ entry.title }}</a></li>
+      <a href="{{ entry.url | url }}" class="w3-bar-item w3-button" style="width:20% !important">{{ entry.title}}</a>
       {%- endfor %}
-      </ul>
-    </header>
+      </div>
+    </div>
 
-    <main{% if templateClass %} class="{{ templateClass }}"{% endif %}>
+    <main{% if templateClass %} class="{{ templateClass }} w3-padding-64"{% endif %}>
       <div class="warning">
         <ol>
           <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
@@ -32,6 +51,7 @@
       </div>
 
       {{ content | safe }}
+
     </main>
 
     <footer></footer>
