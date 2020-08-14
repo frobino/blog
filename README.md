@@ -7,6 +7,7 @@ The commit history shows how to:
 - add pages and blog posts in form of markdown
 - embed JS script in blog posts using a Node JS module (e.g. ChartJS). See [7], [8]
 - use w3 css with small custom adjustments (see w3-css branch)
+- auto deploy using Travis CI
 
 ## Steps
 
@@ -64,7 +65,7 @@ tags, tags-lisk.njk:
 
 ## TODO
 
-- Auto deploy using Travis CI.
+- Add feeds (see metadata)
 - New page showing how to add dynamic support using Firebase:
   - See [4]
 - Search in site currently implemented with DuckDuckGo searchbox. Improve if needed:
