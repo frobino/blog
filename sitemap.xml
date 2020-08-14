@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/posts/1/blog-post-1/</loc>
+    <lastmod>2018-05-01</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/posts/2/blog-post-2/</loc>
+    <lastmod>2018-07-04</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/posts/3/blog-post-3/</loc>
+    <lastmod>2018-07-04</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/pages/about/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/posts/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/tags/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/tags/BLOG SETUP/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/tags/MOCK/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://myurl.com//11ty-blog-tutorial/tags/JS/</loc>
+    <lastmod>2020-08-14</lastmod>
+  </url>
+</urlset>
