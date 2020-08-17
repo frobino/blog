@@ -2,14 +2,14 @@
 
 This simple tutorial has been inspired by [1], [2], [3]
 
-[![Build Status](https://travis-ci.org/frobino/blog.svg?branch=master)](https://travis-ci.org/frobino/blog)
+[![Build Status](https://travis-ci.com/frobino/blog.svg?branch=master)](https://travis-ci.org/frobino/blog)
 
 The commit history shows how to:
 - setup a 11ty project
 - add pages and blog posts in form of markdown
 - embed JS script in blog posts using a Node JS module (e.g. ChartJS). See [7], [8]
 - use w3 css with small custom adjustments (see w3-css branch)
-- auto deploy using Travis CI
+- auto deploy using Travis CI. Note: currently built on both .org and .com domains. It should be .com only.
 
 ## Steps
 

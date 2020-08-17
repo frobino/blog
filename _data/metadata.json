@@ -1,12 +1,12 @@
 {
   "title": "Francesco's Blog",
-  "url": "https://frobino.github.io/blog/",
+  "url": "https://frobino.github.io/blog",
   "description": "I am writing about my experiences as a developer.",
   "feed": {
     "subtitle": "I am writing about my experiences as a developer.",
     "filename": "feed.xml",
     "path": "/feed/feed.xml",
-    "id": "https://frobino.github.io/blog/"
+    "id": "https://frobino.github.io/blog"
   },
   "author": {
     "name": "frobino",
