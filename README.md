@@ -2,6 +2,8 @@
 
 This simple tutorial has been inspired by [1], [2], [3]
 
+[![Build Status](https://travis-ci.org/frobino/blog.svg?branch=master)](https://travis-ci.org/frobino/blog)
+
 The commit history shows how to:
 - setup a 11ty project
 - add pages and blog posts in form of markdown
