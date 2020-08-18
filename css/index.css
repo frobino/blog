@@ -148,6 +148,7 @@ pre {
 
 /* Searchbox */
 .searchbox{
+  /*
   overflow: hidden;
   margin-right: 1em;
   margin-top: 0.25em;
@@ -155,6 +156,7 @@ pre {
   width: 258px;
   height: 40px;
   float: right;
+  */
 }
 
 /* Posts list */
