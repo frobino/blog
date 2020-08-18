@@ -2,57 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/posts/1/blog-post-1/</loc>
+    <loc>https://frobino.github.io/blog/posts/1/blog-post-1/</loc>
     <lastmod>2018-05-01</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/posts/2/blog-post-2/</loc>
+    <loc>https://frobino.github.io/blog/posts/2/blog-post-2/</loc>
     <lastmod>2018-07-04</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/posts/3/blog-post-3/</loc>
+    <loc>https://frobino.github.io/blog/posts/3/blog-post-3/</loc>
     <lastmod>2018-07-04</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/</loc>
+    <loc>https://frobino.github.io/blog/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/pages/about/</loc>
+    <loc>https://frobino.github.io/blog/pages/about/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/posts/</loc>
+    <loc>https://frobino.github.io/blog/posts/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/pages/search/</loc>
+    <loc>https://frobino.github.io/blog/pages/search/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/tags/</loc>
+    <loc>https://frobino.github.io/blog/tags/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/tags/BLOG SETUP/</loc>
+    <loc>https://frobino.github.io/blog/tags/BLOG SETUP/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/tags/MOCK/</loc>
+    <loc>https://frobino.github.io/blog/tags/MOCK/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/blog/tags/JS/</loc>
+    <loc>https://frobino.github.io/blog/tags/JS/</loc>
     <lastmod>2020-08-18</lastmod>
   </url>
 </urlset>
