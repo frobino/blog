@@ -69,7 +69,9 @@ tags, tags-lisk.njk:
 
 - Add feeds (see metadata)
 - New page showing how to add dynamic support using Firebase:
-  - See [4]
+  - See [4], [9]
+- Auth using Firebase:
+  - See [10]
 - Search in site currently implemented with DuckDuckGo searchbox. Improve if needed:
   - See [5], [6]
 
@@ -81,3 +83,5 @@ tags, tags-lisk.njk:
 [6]: https://www.hawksworx.com/blog/adding-search-to-a-jamstack-site/
 [7]: https://github.com/11ty/eleventy/issues/768
 [8]: https://www.zachleat.com/web/eleventy-tutorial-level-2/
+[9]: https://time2hack.com/intro-to-firebase-with-javascript-and-jquery/
+[10]: https://time2hack.com/simple-login-in-firebase-web-api/
