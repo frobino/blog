@@ -5,22 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francesco&#39;s Blog</title>
     <meta name="Description" content="I am writing about my experiences as a developer.">
-    <link rel="stylesheet" href="/blog/css/index.css">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
     <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
     <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
   </head>
-  <body>
-    <header>
-      <h1 class="home"><a href="/blog/">Francesco&#39;s Blog</a></h1>
-      <ul class="nav">
-        <li class="nav-item"><a href="/blog/">Home</a></li>
-        <li class="nav-item"><a href="/blog/posts/">Archive</a></li>
-        <li class="nav-item"><a href="/blog/pages/about/">About Me</a></li>
-        <li class="nav-item"><a href="/blog/pages/search/">Search</a></li>
-      </ul>
-    </header>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
 
-    <main class="tmpl-home">
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <nav class="w3-top w3-hide-small w3-bar w3-black w3-center">
+      <a href="/blog/" class="w3-bar-item w3-button">Francesco&#39;s Blog</a>
+      <div class="w3-right w3-hide-small">
+        <a href="/blog/" class="w3-bar-item w3-button">Home</a>
+        <a href="/blog/posts/" class="w3-bar-item w3-button">Archive</a>
+        <a href="/blog/pages/about/" class="w3-bar-item w3-button">About Me</a>
+        <a href="/blog/pages/search/" class="w3-bar-item w3-button">Search</a>
+      </div>
+    </nav>
+
+    <!-- Navbar on small screens (Hidden on medium and large screens) -->
+    <div class="w3-top w3-hide-large w3-hide-medium">
+      <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+      <ul class="nav">
+      <a href="/blog/" class="w3-bar-item w3-button" style="width:20% !important">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button" style="width:20% !important">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button" style="width:20% !important">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button" style="width:20% !important">Search</a>
+      </div>
+    </div>
+
+    <main class="tmpl-home w3-padding-64">
+      <!--
       <div class="warning">
         <ol>
           <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
@@ -29,6 +50,7 @@
         </ol>
         <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
       </div>
+      -->
 
       <h1>Tags</h1>
 
@@ -41,6 +63,7 @@
 
   
   <a href="/blog/tags/JS/" class="tag">JS</a>
+
 
 
 
