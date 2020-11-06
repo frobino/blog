@@ -42,16 +42,18 @@ one has to login first! Use the form below:
 <script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-auth.js"></script>
 
 <script>
-  // TODO: Replace with your project's config object
+  // TODO: Replace with your project's config object.
+  // These are not sensitive info. Safety is implemented in
+  // Firebase project by using some form of authentication/protection.
   var firebaseConfig = {
-    apiKey: "apiKey",
-    authDomain: "authDomain",
-    databaseURL: "databaseURL",
-    projectId: "projectId",
-    storageBucket: "storageBucket",
-    messagingSenderId: "messagingSenderId",
-    appId: "appId",
-    measurementId: "measurementId"
+    apiKey: "AIzaSyD5tM-2x3BSOLEJ2eeGlsRT6AKIX19L6Vk",
+    authDomain: "eleventy-blog-tutorial.firebaseapp.com",
+    databaseURL: "https://eleventy-blog-tutorial.firebaseio.com",
+    projectId: "eleventy-blog-tutorial",
+    storageBucket: "eleventy-blog-tutorial.appspot.com",
+    messagingSenderId: "1033941683486",
+    appId: "1:1033941683486:web:ae8fcb2a05be9e49194d0f",
+    measurementId: "G-4CFEYJ55RJ"
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
