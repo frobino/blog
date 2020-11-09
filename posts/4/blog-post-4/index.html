@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This is my fourth post.</title>
+    <meta name="Description" content="This is a post on my blog.">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
+    <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+  </head>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <nav class="w3-top w3-hide-small w3-bar w3-black w3-center">
+      <a href="/blog/" class="w3-bar-item w3-button">Francesco&#39;s Blog</a>
+      <div class="w3-right w3-hide-small">
+        <a href="/blog/" class="w3-bar-item w3-button">Home</a>
+        <a href="/blog/posts/" class="w3-bar-item w3-button">Archive</a>
+        <a href="/blog/pages/about/" class="w3-bar-item w3-button">About Me</a>
+        <a href="/blog/pages/search/" class="w3-bar-item w3-button">Search</a>
+      </div>
+    </nav>
+
+    <!-- Navbar on small screens (Hidden on medium and large screens) -->
+    <div class="w3-top w3-hide-large w3-hide-medium">
+      <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+      <ul class="nav">
+      <a href="/blog/" class="w3-bar-item w3-button" style="width:20% !important">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button" style="width:20% !important">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button" style="width:20% !important">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button" style="width:20% !important">Search</a>
+      </div>
+    </div>
+
+    <main class="tmpl-post w3-padding-64">
+      <!--
+      <div class="warning">
+        <ol>
+          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
+          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
+          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
+        </ol>
+        <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+      </div>
+      -->
+
+      <h1>This is my fourth post.</h1>
+
+<p>This is a post showing how to store data to Firebase.</p>
+<form class="form-signin">
+    <label for="inputEmail" class="sr-only">Email Address</label>
+    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <button class="btn btn-lg btn-primary btn-lock" type="submit" onclick="saveToFirebase()">Subscribe!</button>
+</form>
+<p><button class="btn btn-lg btn-primary btn-lock" type="submit" onclick="readFromFirebase()">List subscribers!</button></p>
+<p><strong>NOTE</strong>: before getting something out from the above buttons,
+one has to login first! Use the form below:</p>
+<!-- TODO: if I use a form instead of div, sign in fails... Why?-->
+<div id="myDIV" class="form-signin">
+    <label for="inputEmail" class="sr-only">My Email Address</label>
+    <input type="email" id="myLoginEmail" class="form-control" placeholder="Email address" required autofocus>
+    <label for="inputEmail" class="sr-only">My Password</label>
+    <input type="password" id="myLoginPassword" class="form-control" placeholder="Password" required autofocus>
+    <button class="btn btn-lg btn-primary btn-lock" type="submit" onclick="loginToFirebase()">My Login!</button>
+</div>
+<p><button class="btn btn-lg btn-primary btn-lock" type="submit" onclick="logoutFromFirebase()">My Logout!</button></p>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-app.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.5/firebase-auth.js"></script>
+<script>
+  // TODO: Replace with your project's config object.
+  // These are not sensitive info. Safety is implemented in
+  // Firebase project by using some form of authentication/protection.
+  var firebaseConfig = {
+    apiKey: "AIzaSyD5tM-2x3BSOLEJ2eeGlsRT6AKIX19L6Vk",
+    authDomain: "eleventy-blog-tutorial.firebaseapp.com",
+    databaseURL: "https://eleventy-blog-tutorial.firebaseio.com",
+    projectId: "eleventy-blog-tutorial",
+    storageBucket: "eleventy-blog-tutorial.appspot.com",
+    messagingSenderId: "1033941683486",
+    appId: "1:1033941683486:web:ae8fcb2a05be9e49194d0f",
+    measurementId: "G-4CFEYJ55RJ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  // Global variable to access the database
+  var database = firebase.database();
+</script>
+<!-- Logic using the database -->
+<script src="../scripts/saveToFirebase.js"></script>
+<script src="../scripts/loginToFirebase.js"></script>
+
+
+<p><a href="/blog/">Home</a></p>
+
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /blog/posts/4/blog-post-4/ -->
+  </body>
+</html>
