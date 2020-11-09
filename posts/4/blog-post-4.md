@@ -22,7 +22,7 @@ This is a post showing how to store data to Firebase.
 one has to login first! Use the form below:
 
 <!-- TODO: if I use a form instead of div, sign in fails... Why?-->
-<div class="form-signin">
+<div id="myDIV" class="form-signin">
     <label for="inputEmail" class="sr-only">My Email Address</label>
     <input type="email" id="myLoginEmail" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputEmail" class="sr-only">My Password</label>
