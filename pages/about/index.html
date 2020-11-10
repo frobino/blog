@@ -12,6 +12,8 @@
     <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+    <!-- css below is currently used only for hamburger button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   </head>
   <style>
     body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
@@ -19,25 +21,25 @@
   <body class="w3-light-grey">
 
     <!-- Navbar on medium and large screens (Hidden on small screens) -->
-    <nav class="w3-top w3-hide-small w3-bar w3-black w3-center">
-      <a href="/blog/" class="w3-bar-item w3-button">Francesco&#39;s Blog</a>
-      <div class="w3-right w3-hide-small">
-        <a href="/blog/" class="w3-bar-item w3-button">Home</a>
-        <a href="/blog/posts/" class="w3-bar-item w3-button">Archive</a>
-        <a href="/blog/pages/about/" class="w3-bar-item w3-button">About Me</a>
-        <a href="/blog/pages/search/" class="w3-bar-item w3-button">Search</a>
+    <div class="w3-top">
+      <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="/blog/" class="w3-bar-item w3-button w3-padding-large">Francesco&#39;s Blog</a>
+        <div class="w3-right">
+          <a href="/blog/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Home</a>
+          <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Archive</a>
+          <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">About Me</a>
+          <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Search</a>
+        </div>
       </div>
-    </nav>
+    </div>
 
-    <!-- Navbar on small screens (Hidden on medium and large screens) -->
-    <div class="w3-top w3-hide-large w3-hide-medium">
-      <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-      <ul class="nav">
-      <a href="/blog/" class="w3-bar-item w3-button" style="width:20% !important">Home</a>
-      <a href="/blog/posts/" class="w3-bar-item w3-button" style="width:20% !important">Archive</a>
-      <a href="/blog/pages/about/" class="w3-bar-item w3-button" style="width:20% !important">About Me</a>
-      <a href="/blog/pages/search/" class="w3-bar-item w3-button" style="width:20% !important">Search</a>
-      </div>
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/blog/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
     <main class="tmpl-post w3-padding-64">
@@ -65,5 +67,18 @@
     <footer></footer>
 
     <!-- Current page: /blog/pages/about/ -->
+
+    <script>
+      // Used to toggle the menu on small screens when clicking on the menu button
+      function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+    </script>
+
   </body>
 </html>
