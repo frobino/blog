@@ -47,8 +47,11 @@ The link at the beginning of this post was found when searching
 
 ## Git and Gerrit
 
-TODO
+Usually less need of branches, use gerrit as branches:
+```
+git push origin HEAD:refs/for/master
+```
 
 ## Gitflow
 
-TODO
+See [description here](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
