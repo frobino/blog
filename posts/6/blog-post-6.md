@@ -1,13 +1,11 @@
 ---
-title: Git workflows.
+title: Git workflows
 description: Document different git workflows.
 date: 2021-03-02
 tags:
 - GIT
 layout: "layouts/post.njk"
 ---
-
-# Git workflows
 
 A concise description of different workflows using git.
 
@@ -19,23 +17,23 @@ A very good post describing concisely the model can be found
 Summary:
 - fork the repo of the project you want to contribute to;
 - clone the forked repo:
-  ```
+  ``` git
   git clone **your ssh/git url**
   ```
 - add the original remote to be "tracked", so that our forked
   repo can follow the development of the original project:
-  ```
+  ``` git
   git remote add --track master upstream git://github.com/upstreamname/projectname.git
   git fetch upstream
   git merge upstream/master
   ```
 - create out feature branch:
-  ```
+  ``` git
   git checkout newfeature
   ```
 - Work on the feature branch!
 - Submit a pull request:
-  ```
+  ``` git
   git push origin newfeature
   ```
   Then go to Github / Gitlab and create the pull request;
@@ -48,7 +46,7 @@ The link at the beginning of this post was found when searching
 ## Git and Gerrit
 
 Usually less need of branches, use gerrit as branches:
-```
+``` git
 git push origin HEAD:refs/for/master
 ```
 

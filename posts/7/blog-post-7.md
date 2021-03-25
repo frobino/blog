@@ -1,5 +1,5 @@
 ---
-title: CI/CD with git.
+title: CI/CD with git, jenkins, gerrit, docker
 description: Document CI/CD approaches using git.
 date: 2021-03-08
 tags:
@@ -9,8 +9,6 @@ tags:
 - DOCKER
 layout: "layouts/post.njk"
 ---
-
-# CI/CD with git, jenkins, gerrit
 
 Summary of "how-to" for setting up a CI/CD environment. 
 
@@ -76,7 +74,7 @@ on a specific slave by means of Labels.
 2. Specify the Label that matches the slave(s) on which the job can run
 
 In case of use of a Jenkinsfile, the following can be used:
-```
+``` text
 pipeline {
     agent {
         label 'mylabel' /* Only use agents labeled as compatible. */
@@ -100,7 +98,7 @@ which in turn can be committed to a project’s source control repository.
 how to create and use a Jenkinsfile.
 
 Common structure of a Jenkinsfile:
-```
+``` text
 pipeline {
     /*
      * [optional] configure agent/slave
@@ -159,13 +157,13 @@ For *Branches*, make sure to use the proper notation or **.
 ### Configure Gerrit project with Verified label from Jenkins job
 
 Checkout the special config branch of the project:
-```
-$ git fetch origin refs/meta/config:config
-$ git checkout config
+``` git
+git fetch origin refs/meta/config:config
+git checkout config
 ```
 Here one should see the file project.config.
 Add the following text to the end of this file: 
-```
+``` text
 [label "Verified"]
     function = MaxWithBlock
     value = -1 Fails
@@ -173,10 +171,10 @@ Add the following text to the end of this file:
     value = +1 Verified
 ```
 Commit and push the config back to the server:
-```
-$ git add project.config
-$ git commit -m "Added Verified label"
-$ git push origin HEAD:refs/meta/config
+``` git
+git add project.config
+git commit -m "Added Verified label"
+git push origin HEAD:refs/meta/config
 ```
 Continue by allowing Non-Interactive Users (and Administrators) to give the label Verified:
 - Go to Project - your project
@@ -188,20 +186,20 @@ Continue by allowing Non-Interactive Users (and Administrators) to give the labe
 ## Submodules
 
 Add a submodule to your project:
-```
-$ git submodule add https://github.com/Microsoft/vcpkg
-$ git add .gitmodules vcpkg/
-$ git commit -m "added submodule"
+``` git
+git submodule add https://github.com/Microsoft/vcpkg
+git add .gitmodules vcpkg/
+git commit -m "added submodule"
 ```
 
 The strucuture of a .gitmodules file is similar to:
-```
+``` text
 [submodule "sub/subproject"]
 	path = sub/subproject
 	url = ../subproject
 ```
 or
-```
+``` text
 [submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter"]
 	path = analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter
 	url = https://gitlab.com/trace-validation/requirement-converter.git
@@ -210,10 +208,10 @@ or
 ```
 
 Clone a project with submodules:
-```
-$ git clone /url/to/repo/with/submodules
-$ git submodule init
-$ git submodule update
+``` git
+git clone /url/to/repo/with/submodules
+git submodule init
+git submodule update
 ```
 
 ## Git lfs and Artifactory
@@ -223,48 +221,48 @@ $ git submodule update
 ## Docker
 
 Build an image from Dockerfile:
-```
+``` bash
 cd <folder containing Dockerfile + cross compiler for powerpc>
 docker build --build-arg win_user=frobino -t myimage:0.1 .
 ```
 
 Configure and start container for the 1st time:
-```
+``` bash
 docker run --name frobino-container -v /home/frobino/git_wa:/mnt/git_wa --user frobino -it myimage:0.1 /bin/bash
 ```
 
 Start container:
-```
+``` bash
 docker start frobino-container
 ```
 
 Exec command in container
-```
+``` bash
 docker exec frobino-container -it /bin/bash
 ```
 
 Stop container:
-```
+``` bash
 docker stop frobino-container
 ```
 
 Remove image
-```
+``` bash
 docker rmi imagename
 ```
 
 Remove container
-```
+``` bash
 docker rm containername
 ```
 
 List containers:
-```
+``` bash
 docker ps -a
 ```
 
 Example of Dockerfile:
-```
+``` bash
 # Initially tested with debian:testing.
 # To switch between testing and buster change the "sed" commands into "testing" or "buster"
 FROM debian:buster
