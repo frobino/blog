@@ -1,13 +1,13 @@
 ---
-title: Trace compass user experience.
-description: Summary of highlights from the tracevizlab course.
+title: Trace compass user experience
+description: Summary of highlights from the tracevizlab course
 date: 2021-03-08
 tags:
 - TRACECOMPASS
 layout: "layouts/post.njk"
 ---
 
-# Trace compass user experience
+Summary of highlights from the [tracevizlab](https://github.com/tuxology/tracevizlab) course.
 
 ## Vocabulary
 
@@ -20,14 +20,14 @@ The best way to describe the state system is with its direct visual representati
 
 **Data provider**: is a way to describe the data to display (the elements and the states).
 An easy way to define a data provider is simply to provide the paths in the *State System* of the elements to display. E.g.:
-```
+``` java
 var map = new java.util.HashMap();
 map.put(ENTRY_PATH, '*');
 provider = createTimeGraphProvider(analysis, map);
 ```
 
 Then, to open a view, one simply needs to send the provider to the openTimeGraphView method:
-```
+``` java
 openTimeGraphView(provider);
 ```
 NOTE: data providers are an "upgraded" version of the old "view builders"
@@ -67,7 +67,7 @@ Below some examples.
 **Time Graph View** (e.g. used by **Kernel Resource view**, **Flame Chart**, **Flame graph**):
 - org.eclipse.tracecompass.tmf.ui.widgets.timegraph: Base classes for time graphs e.g. Gantt-charts
 
-![Time Graph View](https://github.com/tuxology/tracevizlab/blob/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/fullTimeScale.png)
+![Time Graph View](https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/fullTimeScale.png)
 
 **Density Graph** (e.g. used by **Kernel Histogram view**? or **System Call Density**? or **Function Durations Distribution**):
 - org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density: Base classes for Density Graphs
@@ -79,17 +79,15 @@ Below some examples.
 - org.eclipse.tracecompass.tmf.ui.views.tmfChartView.java: Common base classes for X-Y-Chart viewers based on SWTChart
 - org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.scatter: Base classes for Scatter Charts
 
-![Scatter Chart](https://github.com/tuxology/tracevizlab/blob/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassLatencyViews.png)
+![Scatter Chart](https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassLatencyViews.png)
 
 **Latency Table** (e.g. used by **Kernel System Call Latency**):
 - org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table: Base classes for Latency Tables
 
-![Latency Table](https://github.com/tuxology/tracevizlab/blob/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassLatencyViews.png)
-
 **Statistics Table** (e.g. used by **System Call Latency Statistics**, or **Function Duration Statistics**?):
 - org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.statistics: Base classes for Statistics Tables
 
-![Statistics Table](https://github.com/tuxology/tracevizlab/blob/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassLatencyViews.png)
+![Statistics Table](https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassStatisticsView.png)
 
 **Pie Chart** ??
 
