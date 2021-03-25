@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco&#39;s Blog</title>
-    <meta name="Description" content="I am writing about my experiences as a developer.">
+    <title>Git workflows</title>
+    <meta name="Description" content="Document different git workflows.">
     <!-- custom css, for style which is NOT present in the w3.css -->
     <link rel="stylesheet" href="/blog/css/custom.css">
     <!-- custom css used for eleventy language plugin -->
@@ -42,7 +42,7 @@
       <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
-    <main class="tmpl-home w3-padding-64">
+    <main class="tmpl-post w3-padding-64">
       <!--
       <div class="warning">
         <ol>
@@ -54,47 +54,45 @@
       </div>
       -->
 
-      <h1>Tags</h1>
+      <h1>Git workflows</h1>
+
+<p>A concise description of different workflows using git.</p>
+<h2>[Github pull | Gitlab merge] request model</h2>
+<p>A very good post describing concisely the model can be found
+<a href="https://www.gun.io/blog/how-to-github-fork-branch-and-pull-request">here</a>.</p>
+<p>Summary:</p>
+<ul>
+<li>fork the repo of the project you want to contribute to;</li>
+<li>clone the forked repo:<pre class="language-git"><code class="language-git">git clone **your ssh/git url**</code></pre>
+</li>
+<li>add the original remote to be &quot;tracked&quot;, so that our forked
+repo can follow the development of the original project:<pre class="language-git"><code class="language-git">git remote add --track master upstream git://github.com/upstreamname/projectname.git<br>git fetch upstream<br>git merge upstream/master</code></pre>
+</li>
+<li>create out feature branch:<pre class="language-git"><code class="language-git">git checkout newfeature</code></pre>
+</li>
+<li>Work on the feature branch!</li>
+<li>Submit a pull request:<pre class="language-git"><code class="language-git">git push origin newfeature</code></pre>
+Then go to Github / Gitlab and create the pull request;</li>
+<li>Whenever you commit and push more things to that branch of your code,
+they will be included in that pull request until it is closed.</li>
+</ul>
+<p>The link at the beginning of this post was found when searching
+<a href="https://stackoverflow.com/questions/7244321/how-do-i-update-a-github-forked-repository">how to update forked repo</a>.</p>
+<h2>Git and Gerrit</h2>
+<p>Usually less need of branches, use gerrit as branches:</p>
+<pre class="language-git"><code class="language-git">git push origin HEAD:refs/for/master</code></pre>
+<h2>Gitflow</h2>
+<p>See <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow">description here</a>.</p>
 
 
-  
-  <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-
-  
-  <a href="/blog/tags/MOCK/" class="tag">MOCK</a>
-
-  
-  <a href="/blog/tags/JS/" class="tag">JS</a>
-
-  
-  <a href="/blog/tags/DYNAMIC CONTENT/" class="tag">DYNAMIC CONTENT</a>
-
-  
-  <a href="/blog/tags/FIREBASE/" class="tag">FIREBASE</a>
-
-  
-  <a href="/blog/tags/GAME/" class="tag">GAME</a>
-
-  
-  <a href="/blog/tags/GIT/" class="tag">GIT</a>
-
-  
-  <a href="/blog/tags/GERRIT/" class="tag">GERRIT</a>
-
-  
-  <a href="/blog/tags/JENKINS/" class="tag">JENKINS</a>
-
-  
-  <a href="/blog/tags/DOCKER/" class="tag">DOCKER</a>
-
-
+<p><a href="/blog/">Home</a></p>
 
 
     </main>
 
     <footer></footer>
 
-    <!-- Current page: /blog/tags/ -->
+    <!-- Current page: /blog/posts/6/blog-post-6/ -->
 
     <script>
       // Used to toggle the menu on small screens when clicking on the menu button

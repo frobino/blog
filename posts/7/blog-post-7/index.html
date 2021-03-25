@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CI/CD with git, jenkins, gerrit, docker</title>
+    <meta name="Description" content="Document CI/CD approaches using git.">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
+    <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+    <!-- css below is currently used only for hamburger button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="/blog/" class="w3-bar-item w3-button w3-padding-large">Francesco&#39;s Blog</a>
+        <div class="w3-right">
+          <a href="/blog/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Home</a>
+          <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Archive</a>
+          <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">About Me</a>
+          <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Search</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/blog/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
+    </div>
+
+    <main class="tmpl-post w3-padding-64">
+      <!--
+      <div class="warning">
+        <ol>
+          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
+          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
+          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
+        </ol>
+        <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+      </div>
+      -->
+
+      <h1>CI/CD with git, jenkins, gerrit, docker</h1>
+
+<p>Summary of &quot;how-to&quot; for setting up a CI/CD environment.</p>
+<h2>Jenkins</h2>
+<h3>How to setup Jenkins</h3>
+<p>TODO (include docker).
+Currently hosted <a href="https://sites.google.com/site/francescosblogg/blog/gerritandjenkinstutorial">here</a>.</p>
+<h3>How to configure Jenkins master - slave</h3>
+<p>Jenkins supports a “distributed builds” architecture, also called
+“master-agent mode” or “master-slave architecture”:</p>
+<ul>
+<li><strong>master</strong>: is the Jenkins server responsible for managing the build
+environment and providing GUI and API for the user</li>
+<li><strong>slave</strong> (a.k.a. <strong>agent</strong>): is a separate machine set up to
+actually execute the jobs</li>
+</ul>
+<p>The master/slave architecture comes in handy when you need to have several
+different environments to test your builds or when the master runs out
+of resources.
+See <a href="https://www.jenkins.io/doc/book/scaling/architecting-for-scale/">Distributed Builds Architecture</a> for more details.</p>
+<p>In order to setup an master/slave configuration, the slave needs to run
+an agent program to establish a bi-directional connection with the master.
+There are different types of connections that can be used between
+master and slave:</p>
+<ul>
+<li>SSH</li>
+<li>JNPL-TCP</li>
+</ul>
+<p>Here we will describe how to configure a SSH connector.
+This guide assumes that there is a SSH server already installed
+on the slave machine.
+Steps to configure SSH connector</p>
+<ol>
+<li>Click on Manage Jenkins in the left corner on the Jenkins dashboard.</li>
+<li>Click on Manage Nodes.</li>
+<li>Click on New Node and enter the name of the node (typically the host name)
+in the corresponding field. Click on the Permanent Agent radio button
+and press OK.</li>
+<li>Enter the required information.
+<ul>
+<li>In the Remote root directory field insert the absolute path to
+the directory you want to be used by the agent as its working directory.</li>
+<li>Typical values are “C:\Jenkins” for agents running on a Windows machine
+and ”/home/Jenkins” or “var/Jenkins” on Linux machines.</li>
+<li>In the Host field enter the IP address of the slave machine.
+Select the Launch agents via SSH option from he Launch method
+dropdown list and Manually trusted key Verification Strategy from
+the Host Key Verification Strategy dropdown list.</li>
+<li>After you have inserted the required information as described
+press on the Add button and click on Jenkins.</li>
+</ul>
+</li>
+<li>Enter the SSH username and password needed to connect to SSH server
+running on the slave machine and then press on the Add button.</li>
+<li>From the Credentials dropdown list select the item you just created
+and press the Save button.</li>
+</ol>
+<p>Once a slave is configured, we can configure Jenkins jobs to execute
+on a specific slave by means of Labels.</p>
+<ol>
+<li>In the Jenkins job, select the configuration parameter
+&quot;Restrict where this project can be run&quot;</li>
+<li>Specify the Label that matches the slave(s) on which the job can run</li>
+</ol>
+<p>In case of use of a Jenkinsfile, the following can be used:</p>
+<pre class="language-text"><code class="language-text">pipeline {<br>    agent {<br>        label 'mylabel' /* Only use agents labeled as compatible. */<br>    }<br>    ...<br>    stages{...}<br>...<br>}</code></pre>
+<h3>How to use Jenkinsfiles</h3>
+<p>A continuous delivery (CD) pipeline is an automated expression
+of your process for getting software from version control right through to your users and customers.
+Every change to your software (committed in source control) goes through
+steps (build, test execution, etc.) on its way to being released.</p>
+<p>A Jenkins Pipeline is written into a text file (called a <strong>Jenkinsfile</strong>)
+which in turn can be committed to a project’s source control repository.
+<a href="https://www.jenkins.io/doc/book/pipeline/jenkinsfile/">See here</a>
+how to create and use a Jenkinsfile.</p>
+<p>Common structure of a Jenkinsfile:</p>
+<pre class="language-text"><code class="language-text">pipeline {<br>    /*<br>     * [optional] configure agent/slave<br>     */<br>    agent {<br>        label 'mylabel' /* Only use agents labeled as compatible. */<br>    }<br><br>    /* <br>     * Each stage is used as an independent part of the build.<br>     * If any stage has compilation errors or failed tests, the build fails.<br>     */<br>    stages {<br><br>            stage('build') {<br>                agent { dockerfile { filename 'Dockerfile.bare' } }<br>                steps {<br>                    dir('src') {<br>                        catchError(stageResult: 'FAILURE') {<br>                            script {<br>                                tee('build.log') {<br>                                    sh 'make'<br>                                }<br>                            }<br>                            recordIssues enabledForFailure: true, failOnError:  false, healthy: 1,<br>                                tools: [gcc(id: 'build', name: 'Build',<br>                                    pattern: 'build.log')]<br>                            archiveArtifacts artifacts: 'build_directory/*.bin, build_directory/*.map,build_directory/*.elf'<br>                        }                        <br>                    }<br>                }<br>            }<br>            ...<br>    }<br><br>    post {<br>        always {<br>            step([$class: 'Mailer', sendToIndividuals: true,<br>               recipients: emailextrecipients([culprits(), requestor()])])<br>            deleteDir() // Save much disk space. Adds around 150% cloning time.<br>        }<br>    }<br>}</code></pre>
+<h3>Configure Jenkins to provide Verified result to Gerrit project</h3>
+<p>See <a href="https://plugins.jenkins.io/gerrit-trigger/">instructions here</a>.</p>
+<p>Special attention should be given to the <em>Gerrit project</em> section.
+Configure correctly <em>Type</em>, <em>Pattern</em> and <em>Branches</em>.
+For <em>Branches</em>, make sure to use the proper notation or **.</p>
+<h2>Gerrit</h2>
+<h3>Configure Gerrit project with Verified label from Jenkins job</h3>
+<p>Checkout the special config branch of the project:</p>
+<pre class="language-git"><code class="language-git">git fetch origin refs/meta/config:config<br>git checkout config</code></pre>
+<p>Here one should see the file project.config.
+Add the following text to the end of this file:</p>
+<pre class="language-text"><code class="language-text">[label "Verified"]<br>    function = MaxWithBlock<br>    value = -1 Fails<br>    value =  0 No score<br>    value = +1 Verified</code></pre>
+<p>Commit and push the config back to the server:</p>
+<pre class="language-git"><code class="language-git">git add project.config<br>git commit -m <span class="token string">"Added Verified label"</span><br>git push origin HEAD:refs/meta/config</code></pre>
+<p>Continue by allowing Non-Interactive Users (and Administrators) to give the label Verified:</p>
+<ul>
+<li>Go to Project - your project</li>
+<li>Select Access</li>
+<li>Click on Edit</li>
+<li>Click on Add Reference</li>
+<li>Click on Add Permission and select a label in the drop-down list, and type a Group Name, then click Add</li>
+</ul>
+<h2>Submodules</h2>
+<p>Add a submodule to your project:</p>
+<pre class="language-git"><code class="language-git">git submodule add https://github.com/Microsoft/vcpkg<br>git add .gitmodules vcpkg/<br>git commit -m <span class="token string">"added submodule"</span></code></pre>
+<p>The strucuture of a .gitmodules file is similar to:</p>
+<pre class="language-text"><code class="language-text">[submodule "sub/subproject"]<br>	path = sub/subproject<br>	url = ../subproject</code></pre>
+<p>or</p>
+<pre class="language-text"><code class="language-text">[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter"]<br>	path = analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter<br>	url = https://gitlab.com/trace-validation/requirement-converter.git<br>[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator"]<br>	path = analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator</code></pre>
+<p>Clone a project with submodules:</p>
+<pre class="language-git"><code class="language-git">git clone /url/to/repo/with/submodules<br>git submodule init<br>git submodule update</code></pre>
+<h2>Git lfs and Artifactory</h2>
+<p><a href="https://help.sonatype.com/repomanager3/formats/git-lfs-repositories">TODO</a></p>
+<h2>Docker</h2>
+<p>Build an image from Dockerfile:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>folder containing Dockerfile + cross compiler <span class="token keyword">for</span> powerpc<span class="token operator">></span><br>docker build --build-arg <span class="token assign-left variable">win_user</span><span class="token operator">=</span>frobino -t myimage:0.1 <span class="token builtin class-name">.</span></code></pre>
+<p>Configure and start container for the 1st time:</p>
+<pre class="language-bash"><code class="language-bash">docker run --name frobino-container -v /home/frobino/git_wa:/mnt/git_wa --user frobino -it myimage:0.1 /bin/bash</code></pre>
+<p>Start container:</p>
+<pre class="language-bash"><code class="language-bash">docker start frobino-container</code></pre>
+<p>Exec command in container</p>
+<pre class="language-bash"><code class="language-bash">docker <span class="token builtin class-name">exec</span> frobino-container -it /bin/bash</code></pre>
+<p>Stop container:</p>
+<pre class="language-bash"><code class="language-bash">docker stop frobino-container</code></pre>
+<p>Remove image</p>
+<pre class="language-bash"><code class="language-bash">docker rmi imagename</code></pre>
+<p>Remove container</p>
+<pre class="language-bash"><code class="language-bash">docker <span class="token function">rm</span> containername</code></pre>
+<p>List containers:</p>
+<pre class="language-bash"><code class="language-bash">docker <span class="token function">ps</span> -a</code></pre>
+<p>Example of Dockerfile:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Initially tested with debian:testing.</span><br><span class="token comment"># To switch between testing and buster change the "sed" commands into "testing" or "buster"</span><br>FROM debian:buster<br>MAINTAINER frobino@kth.se<br><br><span class="token comment"># Setup proxy if needed:</span><br><span class="token comment"># ENV HTTP_PROXY "http://webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV HTTPS_PROXY "webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV http_proxy "http://webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV NO_PROXY "localhost,127.0.0.1"</span><br><br><span class="token comment"># add non-free repos</span><br>RUN <span class="token function">sed</span> -i <span class="token string">"s#deb http://deb.debian.org/debian buster main#deb http://deb.debian.org/debian testing main contrib non-free#g"</span> /etc/apt/sources.list<br>RUN <span class="token function">sed</span> -i <span class="token string">"s#deb http://security.debian.org/debian-security buster/updates main##g"</span> /etc/apt/sources.list<br>RUN <span class="token function">sed</span> -i <span class="token string">"s#deb http://deb.debian.org/debian buster-updates main#deb http://deb.debian.org/debian testing-updates main contrib non-free#g"</span> /etc/apt/sources.list<br><span class="token comment"># RUN cat /etc/apt/sources.list</span><br><br>RUN <span class="token function">apt-get</span> update --allow-releaseinfo-change <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y <span class="token punctuation">\</span><br>    <span class="token function">git</span> <span class="token punctuation">\</span><br>    gcc <span class="token punctuation">\</span><br>    gcc-multilib<br>    <span class="token comment"># How to install specific version:</span><br>    <span class="token comment"># libcunit1-dev=1.3.*</span><br><br>RUN dpkg --add-architecture i386<br>RUN <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> -y <span class="token punctuation">\</span><br>    wine32<br><br><span class="token comment"># TODO: find a better way to install waf (e.g. host on Nexus)</span><br><br><span class="token comment"># RUN mkdir -p /home/Tools/waf-2.0.19 \</span><br><span class="token comment">#     &amp;&amp; curl -x webproxy.bt.bombardier.net:8080 -O https://waf.io/waf-2.0.19 \</span><br><span class="token comment">#     &amp;&amp; mv waf-2.0.19 /home/Tools/waf-2.0.19 &amp;&amp; cp /home/Tools/waf-2.0.19/waf-2.0.19 /home/Tools/waf-2.0.19/waf \</span><br><span class="token comment">#     &amp;&amp; chmod -R 777 /home/Tools/waf-2.0.19</span><br><br>RUN <span class="token function">mkdir</span> -p /home/Tools/waf-2.0.14 <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> --no-check-certificate https://sites.google.com/site/francescosblogg/blog/wafbuildsystem/waf-2.0.14 <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">mv</span> waf-2.0.14 /home/Tools/waf-2.0.14 <span class="token operator">&amp;&amp;</span> <span class="token function">cp</span> /home/Tools/waf-2.0.14/waf-2.0.14 /home/Tools/waf-2.0.14/waf <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> -R <span class="token number">777</span> /home/Tools/waf-2.0.14<br><br><span class="token comment"># TODO: find a better way to install ppc compiler (e.g. host on Nexus)</span><br><span class="token comment"># /media/sf_C_DRIVE/git_wa/Tool_gcc_ppc_linux-$win_user/Tool_gcc_pcc_linux/powerpc-unknown-elf.tar.gz</span><br><br>COPY powerpc-unknown-elf-gcc4.9.4.tar.gz /home/Tools/<br>RUN <span class="token function">tar</span> xvf /home/Tools/powerpc-unknown-elf-gcc4.9.4.tar.gz --directory /home/Tools <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> -R <span class="token number">777</span> /home/Tools/powerpc-unknown-elf<br><br><span class="token comment"># Use parameter passed with the --build-arg flag:</span><br><span class="token comment"># Add windows username as generic parameter when starting the container</span><br>ARG <span class="token assign-left variable">win_user</span><span class="token operator">=</span>default_value<br>ENV <span class="token assign-left variable">env_var_name</span><span class="token operator">=</span><span class="token variable">$win_user</span><br><br><span class="token comment">## Setup env variables ##</span><br><br><span class="token comment"># $ docker build --build-arg win_user=a_value # [...]</span><br>ENV <span class="token assign-left variable">USERNAME</span><span class="token operator">=</span><span class="token variable">$win_user</span><br>ENV <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span>:/home/Tools/waf-2.0.14<br><br><span class="token comment">## CREATE $win_user USER ##</span><br><br><span class="token comment"># Create the home directory for the new app user.</span><br>RUN <span class="token function">mkdir</span> -p /home/<span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span><br>    <span class="token function">chmod</span> -R <span class="token number">777</span> /home/<span class="token variable">$win_user</span><br><br><span class="token comment"># Create an $win_user user so our programs doesn't run as root.</span><br>RUN <span class="token function">groupadd</span> -r <span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span><br>    <span class="token function">useradd</span> -r -g <span class="token variable">$win_user</span> -d /home/<span class="token variable">$win_user</span> -s /sbin/nologin -c <span class="token string">"Docker image user"</span> <span class="token variable">$win_user</span><br><br><span class="token comment"># Set the home directory to our app user's home.</span><br>ENV <span class="token assign-left variable"><span class="token environment constant">HOME</span></span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span><br>ENV <span class="token assign-left variable">WINEARCH</span><span class="token operator">=</span>win32<br>ENV <span class="token assign-left variable">WINEPREFIX</span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span>/.wine<br><br><span class="token comment"># The following is only to show how to add aliases:</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-gcc=powerpc-linux-gnu-gcc' >> /home/$win_user/.bashrc</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ar=powerpc-linux-gnu-ar' >> /home/$win_user/.bashrc</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ld=powerpc-linux-gnu-ld' >> /home/$win_user/.bashrc</span><br><br>RUN <span class="token function">chown</span> -R <span class="token variable">$win_user</span><span class="token builtin class-name">:</span><span class="token variable">$win_user</span> /home/<span class="token variable">$win_user</span><br><br>CMD <span class="token punctuation">[</span>“echo”,”Image created”<span class="token punctuation">]</span></code></pre>
+
+
+<p><a href="/blog/">Home</a></p>
+
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /blog/posts/7/blog-post-7/ -->
+
+    <script>
+      // Used to toggle the menu on small screens when clicking on the menu button
+      function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+    </script>
+
+  </body>
+</html>
