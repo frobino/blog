@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trace compass user experience</title>
+    <meta name="Description" content="Summary of highlights from the tracevizlab course">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
+    <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+    <!-- css below is currently used only for hamburger button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="/blog/" class="w3-bar-item w3-button w3-padding-large">Francesco&#39;s Blog</a>
+        <div class="w3-right">
+          <a href="/blog/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Home</a>
+          <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Archive</a>
+          <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">About Me</a>
+          <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Search</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/blog/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
+    </div>
+
+    <main class="tmpl-post w3-padding-64">
+      <!--
+      <div class="warning">
+        <ol>
+          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
+          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
+          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
+        </ol>
+        <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+      </div>
+      -->
+
+      <h1>Trace compass user experience</h1>
+
+<p>Summary of highlights from the <a href="https://github.com/tuxology/tracevizlab">tracevizlab</a> course.</p>
+<h2>Vocabulary</h2>
+<p><strong>Analysis</strong>: an analysis can be defined as a function of events, or function of other analyses, that transforms the trace's data into something meaningful.
+Typically, analyses will focus on some aspects of a system, look at subsets of events and store results in on-disk data structures made for this purpose (<em>State System</em>).
+Depending on the events contained in the trace, not all analyses may be available for all traces.</p>
+<p><strong>State System</strong>: it is like a database that stores the states of different elements through time.
+The best way to describe the state system is with its direct visual representation: the time graph view.</p>
+<p><strong>Data provider</strong>: is a way to describe the data to display (the elements and the states).
+An easy way to define a data provider is simply to provide the paths in the <em>State System</em> of the elements to display. E.g.:</p>
+<pre class="language-java"><code class="language-java"><span class="token keyword">var</span> map <span class="token operator">=</span> <span class="token keyword">new</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span><span class="token class-name">HashMap</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>ENTRY_PATH<span class="token punctuation">,</span> <span class="token string">'*'</span><span class="token punctuation">)</span><span class="token punctuation">;</span><br>provider <span class="token operator">=</span> <span class="token function">createTimeGraphProvider</span><span class="token punctuation">(</span>analysis<span class="token punctuation">,</span> map<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>Then, to open a view, one simply needs to send the provider to the openTimeGraphView method:</p>
+<pre class="language-java"><code class="language-java"><span class="token function">openTimeGraphView</span><span class="token punctuation">(</span>provider<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>NOTE: data providers are an &quot;upgraded&quot; version of the old &quot;view builders&quot;</p>
+<p><strong>Views</strong>: are then used to display the analysis results to the user in an easily understandable way.</p>
+<h2>How to interpret views:</h2>
+<p>Kernel Resources view:</p>
+<ul>
+<li>shows the state of every CPU (resource) in the system during the trace</li>
+<li>gives an overview of what is happening in the system</li>
+</ul>
+<p>Kernel Control Flow view:</p>
+<ul>
+<li>shows the state of every thread (and process) in the system during the trace</li>
+<li>yellow on a line means that the thread is blocked</li>
+</ul>
+<p>Use <strong>Legend</strong> to understand meaning of colors of bars.</p>
+<h2>View types:</h2>
+<p>In trace compass we find mainly 3 types:</p>
+<ul>
+<li>Chart/Graph</li>
+<li>Table</li>
+<li>(Tree)Viewer</li>
+</ul>
+<p>TC views are documented <a href="http://archive.eclipse.org/tracecompass/doc/org.eclipse.tracecompass.doc.dev/View-Tutorial.html#TMF_Built-in_Views_and_Viewers">here</a>, but I am not sure it is complete (e.g. pie charts missing?).</p>
+<p>Below some examples.</p>
+<p><strong>X-Y-Chart</strong> (e.g. used by <strong>CPU Usage view</strong>, <strong>Memory Usage view</strong>, <strong>I/O Disk Usage view</strong>):</p>
+<ul>
+<li>org.eclipse.tracecompass.tmf.ui.viewers.xycharts: Common base classes for X-Y-Chart viewers based on SWTChart</li>
+<li>org.eclipse.tracecompass.tmf.ui.viewers.xycharts.barcharts: Base classes for bar charts</li>
+<li>org.eclipse.tracecompass.tmf.ui.viewers.xycharts.linecharts: Base classes for line charts</li>
+</ul>
+<p><img src="https://github.com/tuxology/tracevizlab/blob/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassCpuUsage.png" alt="X-Y-Chart example"></p>
+<p><strong>Time Graph View</strong> (e.g. used by <strong>Kernel Resource view</strong>, <strong>Flame Chart</strong>, <strong>Flame graph</strong>):</p>
+<ul>
+<li>org.eclipse.tracecompass.tmf.ui.widgets.timegraph: Base classes for time graphs e.g. Gantt-charts</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/fullTimeScale.png" alt="Time Graph View"></p>
+<p><strong>Density Graph</strong> (e.g. used by <strong>Kernel Histogram view</strong>? or <strong>System Call Density</strong>? or <strong>Function Durations Distribution</strong>):</p>
+<ul>
+<li>org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.density: Base classes for Density Graphs</li>
+</ul>
+<p><strong>Tree Viewer</strong>:</p>
+<ul>
+<li>org.eclipse.tracecompass.tmf.ui.viewers.tree: Base classes for TMF specific tree viewers</li>
+</ul>
+<p><strong>Scatter Chart</strong> (e.g. used by <strong>Kernel System Call Latency vs Time</strong>):</p>
+<ul>
+<li>org.eclipse.tracecompass.tmf.ui.views.tmfChartView.java: Common base classes for X-Y-Chart viewers based on SWTChart</li>
+<li>org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.scatter: Base classes for Scatter Charts</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassLatencyViews.png" alt="Scatter Chart"></p>
+<p><strong>Latency Table</strong> (e.g. used by <strong>Kernel System Call Latency</strong>):</p>
+<ul>
+<li>org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.table: Base classes for Latency Tables</li>
+</ul>
+<p><strong>Statistics Table</strong> (e.g. used by <strong>System Call Latency Statistics</strong>, or <strong>Function Duration Statistics</strong>?):</p>
+<ul>
+<li>org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.statistics: Base classes for Statistics Tables</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/tuxology/tracevizlab/master/labs/101-analyze-system-trace-in-tracecompass/screenshots/traceCompassStatisticsView.png" alt="Statistics Table"></p>
+<p><strong>Pie Chart</strong> ??</p>
+<p>They should be compared with the ones presented at <a href="https://datavizproject.com/">datavizproject</a>. List which ones are missing, and eventually implement
+for the new Theia interface.</p>
+<h2>Possible extensions:</h2>
+<p>GPU support using CUPTI:</p>
+<ul>
+<li><a href="https://developer.nvidia.com/performance-analysis-tools">Nvidia perf analysis tools</a></li>
+<li><strong>Visual Profiler</strong> and <strong>nvprof</strong> will be <a href="https://docs.nvidia.com/cuda/profiler-users-guide/index.html#migrating-to-nsight-tools">deprecated</a>.
+It is recommended to use next-generation tools:
+<ul>
+<li><strong>NVIDIA Nsight Systems</strong> for GPU and CPU sampling and tracing</li>
+<li><strong>NVIDIA Nsight Compute</strong> for GPU kernel profiling</li>
+</ul>
+</li>
+<li><a href="https://docs.nvidia.com/gameworks/index.html#gameworkslibrary/nvtx/nvidia_tools_extension_library_nvtx.htm">NVIDIA Tools Extension (NVTX)</a>:
+a C-based Application Programming Interface (API) for annotating events, code ranges, and resources in your applications.
+<strong>NVTX</strong> is used for annotating events, code ranges, and resources in the application. It doesn’t provide timing or the GPU trace information. NVTX is used in conjunction with the other Profiling tools like Visual Profiler, Nsight Systems, NSight Visual Studio Edition to capture and visualize annotation and ranges.</li>
+<li><strong>CUPTI</strong> enables the creation of profiling and tracing tools that target CUDA applications.
+Using CUPTI APIs, one can develop profiling tools that give insight into the CPU and GPU behavior of CUDA applications.
+NVIDIA profiling tools nvprof, NVVP and Nsight Systems are layered on top of the CUPTI to capture the CUDA API trace, GPU activity trace, GPU Performance counters and metrics, PC Sampling, Unified Memory profiling, NVLink stats, OpenACC profiling etc etc</li>
+</ul>
+<p>So, it seems that we want to add support for CUPTI in Trace Compass.</p>
+
+
+<p><a href="/blog/">Home</a></p>
+
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /blog/posts/8/blog-post-8/ -->
+
+    <script>
+      // Used to toggle the menu on small screens when clicking on the menu button
+      function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+    </script>
+
+  </body>
+</html>
