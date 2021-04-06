@@ -147,7 +147,12 @@ a C-based Application Programming Interface (API) for annotating events, code ra
 Using CUPTI APIs, one can develop profiling tools that give insight into the CPU and GPU behavior of CUDA applications.
 NVIDIA profiling tools nvprof, NVVP and Nsight Systems are layered on top of the CUPTI to capture the CUDA API trace, GPU activity trace, GPU Performance counters and metrics, PC Sampling, Unified Memory profiling, NVLink stats, OpenACC profiling etc etc</li>
 </ul>
-<p>So, it seems that we want to add support for CUPTI in Trace Compass.</p>
+<p>So, it seems that we want to add support for CUPTI in Trace Compass.
+Some work in this direction seems to have been done:</p>
+<ul>
+<li><a href="https://vampir.eu/tutorial/manual/getting_started">vampir</a> evolved into <a href="https://www.vi-hps.org/projects/score-p">score-p</a></li>
+<li>tracing and visualizing ML and tensorflow, <a href="https://publications.polymtl.ca/4213/1/2019_Zins_Tracing_profiling_machine_learning_dataflow.pdf">paper</a>, <a href="https://github.com/tensorflow/tensorflow/issues/1824">example</a>.</li>
+</ul>
 
 
 <p><a href="/blog/">Home</a></p>
