@@ -110,3 +110,7 @@ GPU support using CUPTI:
   NVIDIA profiling tools nvprof, NVVP and Nsight Systems are layered on top of the CUPTI to capture the CUDA API trace, GPU activity trace, GPU Performance counters and metrics, PC Sampling, Unified Memory profiling, NVLink stats, OpenACC profiling etc etc
 
 So, it seems that we want to add support for CUPTI in Trace Compass.
+Some work in this direction seems to have been done:
+- [vampir](https://vampir.eu/tutorial/manual/getting_started) evolved into [score-p](https://www.vi-hps.org/projects/score-p)
+- tracing and visualizing ML and tensorflow, [paper](https://publications.polymtl.ca/4213/1/2019_Zins_Tracing_profiling_machine_learning_dataflow.pdf
+), [example](https://github.com/tensorflow/tensorflow/issues/1824).
