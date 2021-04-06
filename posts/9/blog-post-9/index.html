@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco&#39;s Blog</title>
-    <meta name="Description" content="I am writing about my experiences as a developer.">
+    <title>Setup Java project</title>
+    <meta name="Description" content="How to quickly setup a Java project">
     <!-- custom css, for style which is NOT present in the w3.css -->
     <link rel="stylesheet" href="/blog/css/custom.css">
     <!-- custom css used for eleventy language plugin -->
@@ -42,7 +42,7 @@
       <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
-    <main class="tmpl-home w3-padding-64">
+    <main class="tmpl-post w3-padding-64">
       <!--
       <div class="warning">
         <ol>
@@ -54,94 +54,48 @@
       </div>
       -->
 
-      
-<h1>Archive</h1>
+      <h1>Setup Java project</h1>
+
+<p>How to quickly setup a Java project.</p>
+<h2>Maven build system</h2>
+<p>See quick intro <a href="https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">here</a>.</p>
+<pre class="language-bash"><code class="language-bash">mvn archetype:generate -DgroupId<span class="token operator">=</span>com.mycompany.app -DartifactId<span class="token operator">=</span>my-app -DarchetypeArtifactId<span class="token operator">=</span>maven-archetype-quickstart -DarchetypeVersion<span class="token operator">=</span><span class="token number">1.4</span> -DinteractiveMode<span class="token operator">=</span>false<br>mvn package<br>java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App</code></pre>
+<h2>Maven Phases</h2>
+<ul>
+<li><strong>validate</strong>: validate the project is correct and all necessary information is available</li>
+<li><strong>compile</strong>: compile the source code of the project</li>
+<li><strong>test</strong>: test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed</li>
+<li><strong>package</strong>: take the compiled code and package it in its distributable format, such as a JAR.</li>
+<li><strong>integration-test</strong>: process and deploy the package if necessary into an environment where integration tests can be run</li>
+<li><strong>verify</strong>: run any checks to verify the package is valid and meets quality criteria</li>
+<li><strong>install</strong>: install the package into the local repository, for use as a dependency in other projects locally</li>
+<li><strong>deploy</strong>: done in an integration or release environment, copies the final package to the remote repository for sharing with other developers and projects.</li>
+</ul>
+<p>There are two other Maven lifecycles of note beyond the default list above. They are</p>
+<ul>
+<li><strong>clean</strong>: cleans up artifacts created by prior builds</li>
+<li><strong>site</strong>: generates site documentation for this project</li>
+</ul>
+<h1>Unit test (mvn test):</h1>
+<ul>
+<li>surefire + reports</li>
+</ul>
+<h1>Integration test (mvn verify):</h1>
+<ul>
+<li>failsafe plugin (to be added) + reports</li>
+<li>uses <em>IT</em> pattern but can be configured</li>
+</ul>
+<p>How to <a href="https://www.baeldung.com/maven-integration-test">write integration test for a webapp</a>, <a href="https://github.com/eugenp/tutorials/blob/master/maven-modules/maven-integration-test/src/integration-test/java/com/baeldung/maven/it/RestITCase.java">gist</a></p>
 
 
-<ol reversed class="postlist" style="counter-reset: start-from 10">
-
-  <li class="postlist-item">
-    <a href="/blog/posts/9/blog-post-9/" class="postlist-link">Setup Java project</a>
-    <time class="postlist-date" datetime="2021-04-06">06 Apr 2021</time>
-    
-      <a href="/blog/tags/Java/" class="tag">Java</a>
-      <a href="/blog/tags/Maven/" class="tag">Maven</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/8/blog-post-8/" class="postlist-link">Trace compass user experience</a>
-    <time class="postlist-date" datetime="2021-03-08">08 Mar 2021</time>
-    
-      <a href="/blog/tags/TRACECOMPASS/" class="tag">TRACECOMPASS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/7/blog-post-7/" class="postlist-link">CI/CD with git, jenkins, gerrit, docker</a>
-    <time class="postlist-date" datetime="2021-03-08">08 Mar 2021</time>
-    
-      <a href="/blog/tags/GIT/" class="tag">GIT</a>
-      <a href="/blog/tags/GERRIT/" class="tag">GERRIT</a>
-      <a href="/blog/tags/JENKINS/" class="tag">JENKINS</a>
-      <a href="/blog/tags/DOCKER/" class="tag">DOCKER</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/6/blog-post-6/" class="postlist-link">Git workflows</a>
-    <time class="postlist-date" datetime="2021-03-02">02 Mar 2021</time>
-    
-      <a href="/blog/tags/GIT/" class="tag">GIT</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/5/blog-post-5/" class="postlist-link">A fun phaser game.</a>
-    <time class="postlist-date" datetime="2020-12-03">03 Dec 2020</time>
-    
-      <a href="/blog/tags/GAME/" class="tag">GAME</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/4/blog-post-4/" class="postlist-link">This is my fourth post.</a>
-    <time class="postlist-date" datetime="2018-07-04">04 Jul 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-      <a href="/blog/tags/DYNAMIC CONTENT/" class="tag">DYNAMIC CONTENT</a>
-      <a href="/blog/tags/FIREBASE/" class="tag">FIREBASE</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/3/blog-post-3/" class="postlist-link">This is my third post.</a>
-    <time class="postlist-date" datetime="2018-07-04">04 Jul 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/2/blog-post-2/" class="postlist-link">This is my second post.</a>
-    <time class="postlist-date" datetime="2018-07-04">04 Jul 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-      <a href="/blog/tags/MOCK/" class="tag">MOCK</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/1/blog-post-1/" class="postlist-link">This is my first post.</a>
-    <time class="postlist-date" datetime="2018-05-01">01 May 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-  </li>
-
-</ol>
-
-
+<p><a href="/blog/">Home</a></p>
 
 
     </main>
 
     <footer></footer>
 
-    <!-- Current page: /blog/posts/ -->
+    <!-- Current page: /blog/posts/9/blog-post-9/ -->
 
     <script>
       // Used to toggle the menu on small screens when clicking on the menu button

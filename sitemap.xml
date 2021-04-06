@@ -42,6 +42,11 @@
   </url>
   
   <url>
+    <loc>https://frobino.github.io/blog/posts/9/blog-post-9/</loc>
+    <lastmod>2021-04-06</lastmod>
+  </url>
+  
+  <url>
     <loc>https://frobino.github.io/blog/</loc>
     <lastmod>2021-04-06</lastmod>
   </url>
@@ -87,12 +92,12 @@
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/tags/TRACECOMPASS/</loc>
+    <loc>https://frobino.github.io/blog/tags/FIREBASE/</loc>
     <lastmod>2021-04-06</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/tags/GAME/</loc>
+    <loc>https://frobino.github.io/blog/tags/Maven/</loc>
     <lastmod>2021-04-06</lastmod>
   </url>
   
@@ -117,7 +122,17 @@
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/tags/FIREBASE/</loc>
+    <loc>https://frobino.github.io/blog/tags/TRACECOMPASS/</loc>
+    <lastmod>2021-04-06</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/Java/</loc>
+    <lastmod>2021-04-06</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/GAME/</loc>
     <lastmod>2021-04-06</lastmod>
   </url>
 </urlset>
