@@ -15,7 +15,7 @@
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-navigation": "^0.1.6",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "luxon": "^1.24.1"
   }
 }
