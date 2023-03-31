@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco&#39;s Blog</title>
-    <meta name="Description" content="I am writing about my experiences as a developer.">
+    <title>Javascript project setup</title>
+    <meta name="Description" content="How to quickly setup a Javascript project">
     <!-- custom css, for style which is NOT present in the w3.css -->
     <link rel="stylesheet" href="/blog/css/custom.css">
     <!-- custom css used for eleventy language plugin -->
@@ -42,7 +42,7 @@
       <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
-    <main class="tmpl-home w3-padding-64">
+    <main class="tmpl-post w3-padding-64">
       <!--
       <div class="warning">
         <ol>
@@ -54,59 +54,50 @@
       </div>
       -->
 
-      <h1>Tags</h1>
+      <h1>Javascript project setup</h1>
+
+<p>How to quickly setup a Javascript project.</p>
+<h2>Package managers</h2>
+<p>The 2 mainly used: <strong>npm</strong> and <strong>yarn</strong></p>
+<h3>npm</h3>
+<p>Usually installed by default with <strong>nvm</strong>.</p>
+<h3>yarn</h3>
+<p>Install:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">npm</span> i <span class="token parameter variable">-g</span> corepack</code></pre>
+<h2>Build systems</h2>
+<p>Monorepo is a software development strategy in which a single repository contains code
+for multiple projects with shared dependencies.
+The repositories are structured into sub repositories, usually located under the <em>/packages</em> folder.
+Subrepositories/components can be published to npmjs registries or similar.
+See for example the base component in theia-trace-extension project.</p>
+<p><strong>lerna</strong>, <strong>yarn-workspace</strong></p>
+<h2>Builder (build tools)</h2>
+<p>Put togheter different tools/libs and give you a quick-start setup: <strong>vite</strong>, <strong>webpack</strong>.</p>
+<h3>vite</h3>
+<pre class="language-bash"><code class="language-bash"><span class="token function">yarn</span> create vite <span class="token operator">&lt;</span>projectName<span class="token operator">></span> <span class="token parameter variable">--template</span> react<br><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>projectName<span class="token operator">></span><br><span class="token function">yarn</span> <span class="token comment"># to install packages</span><br><span class="token function">yarn</span> dev <span class="token comment"># to run and access app</span></code></pre>
+<h3>webpack</h3>
+<p>See theia-trace-extension (or timeline-chart)</p>
+<h2>Backend project (pure js, no html)</h2>
+<pre class="language-bash"><code class="language-bash"><span class="token function">mkdir</span> <span class="token operator">&lt;</span>projectFolder<span class="token operator">></span><br><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>projectFolder<span class="token operator">></span><br><span class="token function">npm</span> init<br><span class="token comment"># Add needed packages</span><br><span class="token function">npm</span> <span class="token function">install</span> express <span class="token parameter variable">--save</span><br><span class="token comment"># Create index.js main file and add code.</span><br><span class="token comment"># E.g.:</span><br><span class="token comment"># console.log('Hello world');</span><br><span class="token function">touch</span> index.js<br><span class="token builtin class-name">echo</span> <span class="token string">"console.log('Hello world')"</span> <span class="token operator">></span> index.js<br><span class="token comment"># Run the code</span><br><span class="token function">node</span> index.js</code></pre>
+<p>See examples at <a href="https://github.com/frobino/js_tutorial">js-tutorials</a>.</p>
+<p>How to debug:</p>
+<pre><code>npm start --inspect command
+</code></pre>
+<p>or:</p>
+<pre><code>node --inspect index.js
+</code></pre>
+<p>Then use a browser to connect to the proposed link.</p>
+<h2>Frontend project (js and html)</h2>
 
 
-  
-  <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-
-  
-  <a href="/blog/tags/Javascript/" class="tag">Javascript</a>
-
-  
-  <a href="/blog/tags/MOCK/" class="tag">MOCK</a>
-
-  
-  <a href="/blog/tags/JS/" class="tag">JS</a>
-
-  
-  <a href="/blog/tags/DYNAMIC CONTENT/" class="tag">DYNAMIC CONTENT</a>
-
-  
-  <a href="/blog/tags/FIREBASE/" class="tag">FIREBASE</a>
-
-  
-  <a href="/blog/tags/GAME/" class="tag">GAME</a>
-
-  
-  <a href="/blog/tags/GIT/" class="tag">GIT</a>
-
-  
-  <a href="/blog/tags/GERRIT/" class="tag">GERRIT</a>
-
-  
-  <a href="/blog/tags/JENKINS/" class="tag">JENKINS</a>
-
-  
-  <a href="/blog/tags/DOCKER/" class="tag">DOCKER</a>
-
-  
-  <a href="/blog/tags/TRACECOMPASS/" class="tag">TRACECOMPASS</a>
-
-  
-  <a href="/blog/tags/Java/" class="tag">Java</a>
-
-  
-  <a href="/blog/tags/Maven/" class="tag">Maven</a>
-
-
+<p><a href="/blog/">Home</a></p>
 
 
     </main>
 
     <footer></footer>
 
-    <!-- Current page: /blog/tags/ -->
+    <!-- Current page: /blog/posts/10/blog-post-10/ -->
 
     <script>
       // Used to toggle the menu on small screens when clicking on the menu button

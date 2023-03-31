@@ -59,7 +59,7 @@
 <p>How to quickly setup a Java project.</p>
 <h2>Maven build system</h2>
 <p>See quick intro <a href="https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">here</a>.</p>
-<pre class="language-bash"><code class="language-bash">mvn archetype:generate -DgroupId<span class="token operator">=</span>com.mycompany.app -DartifactId<span class="token operator">=</span>my-app -DarchetypeArtifactId<span class="token operator">=</span>maven-archetype-quickstart -DarchetypeVersion<span class="token operator">=</span><span class="token number">1.4</span> -DinteractiveMode<span class="token operator">=</span>false<br>mvn package<br>java -cp target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App</code></pre>
+<pre class="language-bash"><code class="language-bash">mvn archetype:generate <span class="token parameter variable">-DgroupId</span><span class="token operator">=</span>com.mycompany.app <span class="token parameter variable">-DartifactId</span><span class="token operator">=</span>my-app <span class="token parameter variable">-DarchetypeArtifactId</span><span class="token operator">=</span>maven-archetype-quickstart <span class="token parameter variable">-DarchetypeVersion</span><span class="token operator">=</span><span class="token number">1.4</span> <span class="token parameter variable">-DinteractiveMode</span><span class="token operator">=</span>false<br>mvn package<br><span class="token function">java</span> <span class="token parameter variable">-cp</span> target/my-app-1.0-SNAPSHOT.jar com.mycompany.app.App</code></pre>
 <h2>Maven Phases</h2>
 <ul>
 <li><strong>validate</strong>: validate the project is correct and all necessary information is available</li>
