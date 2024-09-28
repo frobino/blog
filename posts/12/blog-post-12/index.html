@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tagged “JS”</title>
-    <meta name="Description" content="I am writing about my experiences as a developer.">
+    <title>Minikube tutorial.</title>
+    <meta name="Description" content="Minikube tutorial.">
     <!-- custom css, for style which is NOT present in the w3.css -->
     <link rel="stylesheet" href="/blog/css/custom.css">
     <!-- custom css used for eleventy language plugin -->
@@ -42,7 +42,7 @@
       <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
-    <main class="tmpl-home w3-padding-64">
+    <main class="tmpl-post w3-padding-64">
       <!--
       <div class="warning">
         <ol>
@@ -54,46 +54,81 @@
       </div>
       -->
 
-      <h1>Tagged “JS”</h1>
+      <h1>Minikube tutorial.</h1>
+
+<h2>Install minikube</h2>
+<pre><code>mkdir Tools_installation_files
+cd Tools_installation_files/
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+</code></pre>
+<h2>Install docker (dependency for minikube)</h2>
+<pre><code>sudo apt-get install     ca-certificates     curl     gnupg     lsb-release
+sudo mkdir -m 0755 -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo   &quot;deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian \
+  $(lsb_release -cs) stable&quot; | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+minikube start
+sudo usermod -aG docker $USER
+newgrp docker
+</code></pre>
+<h2>Start minikube</h2>
+<pre><code>minikube start
+minikube kubectl -- get po -A
+emacs ~/.bashrc
+minikube stop
+kubectl get all
+</code></pre>
+<h2>Reset minikube</h2>
+<pre><code>minikube delete --all
+</code></pre>
+<h2>Install ArgoCD</h2>
+<pre><code>kubectl get services -A
+minikube delete --all
+minikube start
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+$ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=&quot;{.data.password}&quot; | base64 -d; echo
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath=&quot;{.data.password}&quot; | base64 -d; echo
+kubectl port-forward svc/argocd-server -n argocd 8080:443
+kubectl create namespace argocd-apps
+</code></pre>
+<h2>Create and start a POD</h2>
+<pre><code>minikube start
+kubectl get pods
+kubectl get services
+kubectl run my-ng1 --image=nginx --restart=Never
+kubectl get pods
+kubectl exec --stdin --tty my-ng1 -- /bin/bash
+touch rbac.yaml
+emacs rbac.yaml
+kubectl apply -f rbac.yaml
+kubectl exec --stdin --tty my-ng1 -- /bin/bash
+</code></pre>
+<h2>Enable a pod in a namespace to create pods in another namespace</h2>
+<pre><code>kubectl create namespace spawner
+kubectl create namespace pool
+kubectl apply -f rbac.yaml (read/write auth to spawner)
+kubectl get clusterrole
+kubectl exec --stdin --tty my-ng1 -n spawner -- /bin/bash
+kubectl get pods
+kubectl get pods -n spawner
+kubectl get pods -n pool
+kubectl delete pod busybox-test -n pool
+kubectl get pods -n pool
+</code></pre>
 
 
-<ol reversed class="postlist" style="counter-reset: start-from 4">
-
-  <li class="postlist-item">
-    <a href="/blog/posts/14/blog-post-14/" class="postlist-link">Summary &quot;Better Data Visualization&quot; book.</a>
-    <time class="postlist-date" datetime="2023-08-10">10 Aug 2023</time>
-    
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/5/blog-post-5/" class="postlist-link">A fun phaser game.</a>
-    <time class="postlist-date" datetime="2020-12-03">03 Dec 2020</time>
-    
-      <a href="/blog/tags/GAME/" class="tag">GAME</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/3/blog-post-3/" class="postlist-link">This is my third post.</a>
-    <time class="postlist-date" datetime="2018-07-04">04 Jul 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-</ol>
-
-
-<p>See <a href="/blog/tags/">all tags</a>.</p>
-
+<p><a href="/blog/">Home</a></p>
 
 
     </main>
 
     <footer></footer>
 
-    <!-- Current page: /blog/tags/JS/ -->
+    <!-- Current page: /blog/posts/12/blog-post-12/ -->
 
     <script>
       // Used to toggle the menu on small screens when clicking on the menu button

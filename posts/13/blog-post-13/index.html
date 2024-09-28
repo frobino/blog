@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tagged “JS”</title>
-    <meta name="Description" content="I am writing about my experiences as a developer.">
+    <title>NAS with Samba.</title>
+    <meta name="Description" content="NAS with Samba.">
     <!-- custom css, for style which is NOT present in the w3.css -->
     <link rel="stylesheet" href="/blog/css/custom.css">
     <!-- custom css used for eleventy language plugin -->
@@ -42,7 +42,7 @@
       <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
     </div>
 
-    <main class="tmpl-home w3-padding-64">
+    <main class="tmpl-post w3-padding-64">
       <!--
       <div class="warning">
         <ol>
@@ -54,46 +54,72 @@
       </div>
       -->
 
-      <h1>Tagged “JS”</h1>
+      <h1>NAS with Samba.</h1>
+
+<h2>How to format disk to exFAT.</h2>
+<p>See <a href="https://linuxconfig.org/how-to-format-usb-with-exfat-on-linux">this tutorial</a>. Uses gdisk and mkfs cli tools.</p>
+<pre><code>sudo apt install exfuse
+sudo apt install exfat-fuse
+sudo gparted
+sudo gdisk /dev/sdb
+sudo mkfs -t exfat /dev/sdb1 
+sudo mkfs -t exfat /dev/sdb2 
+</code></pre>
+<h2>Install and configure Samba</h2>
+<p>Mount the disks that will be used to store the data:</p>
+<pre><code># The umask parameter is needed for exfat to be mounted as 755
+sudo mount /dev/sdb1 /media/bbib/4680-EF03 -o umask=0000
+</code></pre>
+<p>Install Samba:</p>
+<pre><code>sudo apt update
+sudo apt install samba
+sudo cp /etc/samba/smb.comf /etc/samba/smb.comf.bak
+sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+sudo emacs /etc/samba/smb.conf&amp;
+</code></pre>
+<p>Edit the conf file adding the following configuration, where</p>
+<pre><code>[sda1]
+path = /home/bbib/samba/
+Browseable = yes
+Writeable = Yes
+only guest = no
+create mask = 0777
+directory mask = 0777
+Public = no
+Guest ok = no
+valid users = frallan
+
+[sdb1]
+path = /home/bbib/samba-usb/
+Browseable = yes
+Writeable = Yes
+only guest = no
+create mask = 0777
+directory mask = 0777
+Public = no
+Guest ok = no
+valid users = frallan
+</code></pre>
+<p>Add the user that will be used to access the disks:</p>
+<pre><code>sudo adduser frallan
+sudo smbpasswd -a frallan
+sudo systemctl restart smbd
+</code></pre>
+<p>If needed, users can be removed:</p>
+<pre><code>sudo smbpasswd -x frallan
+</code></pre>
+<h2>Use a app to access the NAS:</h2>
+<p>For example <em>Cx File Explorer</em></p>
 
 
-<ol reversed class="postlist" style="counter-reset: start-from 4">
-
-  <li class="postlist-item">
-    <a href="/blog/posts/14/blog-post-14/" class="postlist-link">Summary &quot;Better Data Visualization&quot; book.</a>
-    <time class="postlist-date" datetime="2023-08-10">10 Aug 2023</time>
-    
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/5/blog-post-5/" class="postlist-link">A fun phaser game.</a>
-    <time class="postlist-date" datetime="2020-12-03">03 Dec 2020</time>
-    
-      <a href="/blog/tags/GAME/" class="tag">GAME</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-  <li class="postlist-item">
-    <a href="/blog/posts/3/blog-post-3/" class="postlist-link">This is my third post.</a>
-    <time class="postlist-date" datetime="2018-07-04">04 Jul 2018</time>
-    
-      <a href="/blog/tags/BLOG SETUP/" class="tag">BLOG SETUP</a>
-      <a href="/blog/tags/JS/" class="tag">JS</a>
-  </li>
-
-</ol>
-
-
-<p>See <a href="/blog/tags/">all tags</a>.</p>
-
+<p><a href="/blog/">Home</a></p>
 
 
     </main>
 
     <footer></footer>
 
-    <!-- Current page: /blog/tags/JS/ -->
+    <!-- Current page: /blog/posts/13/blog-post-13/ -->
 
     <script>
       // Used to toggle the menu on small screens when clicking on the menu button
