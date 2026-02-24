@@ -73,121 +73,126 @@
   
   <url>
     <loc>https://frobino.github.io/blog/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/pages/about/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/posts/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/pages/search/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/posts/15/blog-post-15/</loc>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/</loc>
-    <lastmod>2024-09-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://frobino.github.io/blog/tags/BLOG SETUP/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/mongo/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/golang/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/BLOG SETUP/</loc>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/Javascript/</loc>
-    <lastmod>2024-09-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://frobino.github.io/blog/tags/JS/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/k8s/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/NAS/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/Samba/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
-    <loc>https://frobino.github.io/blog/tags/DYNAMIC CONTENT/</loc>
-    <lastmod>2024-09-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://frobino.github.io/blog/tags/FIREBASE/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <loc>https://frobino.github.io/blog/tags/JS/</loc>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/MOCK/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/DYNAMIC CONTENT/</loc>
+    <lastmod>2026-02-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/FIREBASE/</loc>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/GAME/</loc>
-    <lastmod>2024-09-28</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://frobino.github.io/blog/tags/GIT/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/Java/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/Maven/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://frobino.github.io/blog/tags/GIT/</loc>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/TRACECOMPASS/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/GERRIT/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/JENKINS/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
   
   <url>
     <loc>https://frobino.github.io/blog/tags/DOCKER/</loc>
-    <lastmod>2024-09-28</lastmod>
+    <lastmod>2026-02-24</lastmod>
   </url>
 </urlset>

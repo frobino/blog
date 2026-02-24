@@ -1,0 +1,34 @@
+<h1>Intel PT</h1>
+<pre><code>sudo sh -c &quot;echo -1 &gt; /proc/sys/kernel/perf_event_paranoid&quot;
+perf record -e intel_pt//u ./sched_nr_parallel_test
+</code></pre>
+<p>Creates a perf.data file containing the intel pt data.</p>
+<h2>perf2perfetto</h2>
+<p><a href="https://github.com/michoecho/perf2perfetto">perf2perfetto</a> decodes the perf.data to fuchsia traces.</p>
+<p>Create this script:</p>
+<pre><code>#!/bin/bash
+# decode_pt.sh
+
+RELSTART=$1
+DURATION=$2
+DLFILTER_PATH=&quot;$3&quot;
+OUT_FILENAME=&quot;$4&quot;
+MODE=&quot;$5&quot;
+
+ABSSTART=$(perf script -f --itrace=i0ns -Ftime -i perf.data | head -n1 | tr -d ':[:space:]')
+START=$(echo &quot;$ABSSTART + $RELSTART&quot; | bc)
+END=$(echo &quot;$START + $DURATION&quot; | bc)
+
+perf script -f --itrace=bei0ns -i perf.data --dlfilter &quot;$DLFILTER_PATH&quot; --time $START,$END --dlarg &quot;$OUT_FILENAME&quot; --dlarg $MODE
+</code></pre>
+<p>Launch the script as follows:</p>
+<pre><code>export DLFILTER_PATH=~/Projects/perf2perfetto/target/release/libperf2perfetto.so
+./decode_pt.sh 0.00 0.03 &quot;$DLFILTER_PATH&quot; out_cyc_0.01-0.04.ftf c
+./decode_pt.sh 0.00 0.03 &quot;$DLFILTER_PATH&quot; out_cyc_0.01-0.04_i.ftf i
+</code></pre>
+<h2>magic-trace</h2>
+<pre><code>~/Tools/magic-trace/1.1.0/magic-trace attach -pid $(pidof demo)
+~/Tools/magic-trace/1.1.0/magic-trace run ./sched_nr_parallel_test // creates trace.fxt
+~/Tools/magic-trace/1.1.0/magic-trace run -multi-thread ./sched_nr_parallel_test 
+~/Tools/magic-trace/1.1.0/magic-trace run -full-execution -multi-thread ./sched_nr_parallel_test   
+</code></pre>
