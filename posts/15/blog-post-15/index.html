@@ -1,3 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intel PT notes.</title>
+    <meta name="Description" content="Notes on how to use intel-pt and some related tools.">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
+    <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+    <!-- css below is currently used only for hamburger button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="/blog/" class="w3-bar-item w3-button w3-padding-large">Francesco&#39;s Blog</a>
+        <div class="w3-right">
+          <a href="/blog/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Home</a>
+          <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Archive</a>
+          <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">About Me</a>
+          <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Search</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/blog/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
+    </div>
+
+    <main class="tmpl-post w3-padding-64">
+      <!--
+      <div class="warning">
+        <ol>
+          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
+          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
+          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
+        </ol>
+        <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+      </div>
+      -->
+
+      <h1>Intel PT notes.</h1>
+
 <h1>Intel PT</h1>
 <pre><code>sudo sh -c &quot;echo -1 &gt; /proc/sys/kernel/perf_event_paranoid&quot;
 perf record -e intel_pt//u ./sched_nr_parallel_test
@@ -32,3 +90,28 @@ perf script -f --itrace=bei0ns -i perf.data --dlfilter &quot;$DLFILTER_PATH&quot
 ~/Tools/magic-trace/1.1.0/magic-trace run -multi-thread ./sched_nr_parallel_test 
 ~/Tools/magic-trace/1.1.0/magic-trace run -full-execution -multi-thread ./sched_nr_parallel_test   
 </code></pre>
+
+
+<p><a href="/blog/">Home</a></p>
+
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /blog/posts/15/blog-post-15/ -->
+
+    <script>
+      // Used to toggle the menu on small screens when clicking on the menu button
+      function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+    </script>
+
+  </body>
+</html>
