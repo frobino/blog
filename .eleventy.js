@@ -29,6 +29,13 @@ module.exports = async function(eleventyConfig) {
     return [...tagSet];
   });
 
+  // Posts collection: only .md files in posts/ subdirectories (no passthrough HTML like platformer)
+  eleventyConfig.addCollection("posts", (collection) =>
+    collection
+      .filter((item) => item.inputPath?.endsWith(".md") && item.inputPath.includes("/posts/"))
+      .sort((a, b) => b.date - a.date)
+  );
+
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("posts/**/*.js");
   eleventyConfig.addPassthroughCopy("posts/**/*.png");
