@@ -119,7 +119,14 @@ on a specific slave by means of Labels.</p>
 <li>Specify the Label that matches the slave(s) on which the job can run</li>
 </ol>
 <p>In case of use of a Jenkinsfile, the following can be used:</p>
-<pre class="language-text"><code class="language-text">pipeline {<br>    agent {<br>        label 'mylabel' /* Only use agents labeled as compatible. */<br>    }<br>    ...<br>    stages{...}<br>...<br>}</code></pre>
+<pre class="language-text"><code class="language-text">pipeline {
+    agent {
+        label 'mylabel' /* Only use agents labeled as compatible. */
+    }
+    ...
+    stages{...}
+...
+}</code></pre>
 <h3>How to use Jenkinsfiles</h3>
 <p>A continuous delivery (CD) pipeline is an automated expression
 of your process for getting software from version control right through to your users and customers.
@@ -130,7 +137,49 @@ which in turn can be committed to a project’s source control repository.
 <a href="https://www.jenkins.io/doc/book/pipeline/jenkinsfile/">See here</a>
 how to create and use a Jenkinsfile.</p>
 <p>Common structure of a Jenkinsfile:</p>
-<pre class="language-text"><code class="language-text">pipeline {<br>    /*<br>     * [optional] configure agent/slave<br>     */<br>    agent {<br>        label 'mylabel' /* Only use agents labeled as compatible. */<br>    }<br><br>    /* <br>     * Each stage is used as an independent part of the build.<br>     * If any stage has compilation errors or failed tests, the build fails.<br>     */<br>    stages {<br><br>            stage('build') {<br>                agent { dockerfile { filename 'Dockerfile.bare' } }<br>                steps {<br>                    dir('src') {<br>                        catchError(stageResult: 'FAILURE') {<br>                            script {<br>                                tee('build.log') {<br>                                    sh 'make'<br>                                }<br>                            }<br>                            recordIssues enabledForFailure: true, failOnError:  false, healthy: 1,<br>                                tools: [gcc(id: 'build', name: 'Build',<br>                                    pattern: 'build.log')]<br>                            archiveArtifacts artifacts: 'build_directory/*.bin, build_directory/*.map,build_directory/*.elf'<br>                        }                        <br>                    }<br>                }<br>            }<br>            ...<br>    }<br><br>    post {<br>        always {<br>            step([$class: 'Mailer', sendToIndividuals: true,<br>               recipients: emailextrecipients([culprits(), requestor()])])<br>            deleteDir() // Save much disk space. Adds around 150% cloning time.<br>        }<br>    }<br>}</code></pre>
+<pre class="language-text"><code class="language-text">pipeline {
+    /*
+     * [optional] configure agent/slave
+     */
+    agent {
+        label 'mylabel' /* Only use agents labeled as compatible. */
+    }
+
+    /* 
+     * Each stage is used as an independent part of the build.
+     * If any stage has compilation errors or failed tests, the build fails.
+     */
+    stages {
+
+            stage('build') {
+                agent { dockerfile { filename 'Dockerfile.bare' } }
+                steps {
+                    dir('src') {
+                        catchError(stageResult: 'FAILURE') {
+                            script {
+                                tee('build.log') {
+                                    sh 'make'
+                                }
+                            }
+                            recordIssues enabledForFailure: true, failOnError:  false, healthy: 1,
+                                tools: [gcc(id: 'build', name: 'Build',
+                                    pattern: 'build.log')]
+                            archiveArtifacts artifacts: 'build_directory/*.bin, build_directory/*.map,build_directory/*.elf'
+                        }                        
+                    }
+                }
+            }
+            ...
+    }
+
+    post {
+        always {
+            step([$class: 'Mailer', sendToIndividuals: true,
+               recipients: emailextrecipients([culprits(), requestor()])])
+            deleteDir() // Save much disk space. Adds around 150% cloning time.
+        }
+    }
+}</code></pre>
 <h3>Configure Jenkins to provide Verified result to Gerrit project</h3>
 <p>See <a href="https://plugins.jenkins.io/gerrit-trigger/">instructions here</a>.</p>
 <p>Special attention should be given to the <em>Gerrit project</em> section.
@@ -139,12 +188,19 @@ For <em>Branches</em>, make sure to use the proper notation or **.</p>
 <h2>Gerrit</h2>
 <h3>Configure Gerrit project with Verified label from Jenkins job</h3>
 <p>Checkout the special config branch of the project:</p>
-<pre class="language-git"><code class="language-git">git fetch origin refs/meta/config:config<br>git checkout config</code></pre>
+<pre class="language-git"><code class="language-git">git fetch origin refs/meta/config:config
+git checkout config</code></pre>
 <p>Here one should see the file project.config.
 Add the following text to the end of this file:</p>
-<pre class="language-text"><code class="language-text">[label "Verified"]<br>    function = MaxWithBlock<br>    value = -1 Fails<br>    value =  0 No score<br>    value = +1 Verified</code></pre>
+<pre class="language-text"><code class="language-text">[label "Verified"]
+    function = MaxWithBlock
+    value = -1 Fails
+    value =  0 No score
+    value = +1 Verified</code></pre>
 <p>Commit and push the config back to the server:</p>
-<pre class="language-git"><code class="language-git">git add project.config<br>git commit -m <span class="token string">"Added Verified label"</span><br>git push origin HEAD:refs/meta/config</code></pre>
+<pre class="language-git"><code class="language-git">git add project.config
+git commit -m <span class="token string">"Added Verified label"</span>
+git push origin HEAD:refs/meta/config</code></pre>
 <p>Continue by allowing Non-Interactive Users (and Administrators) to give the label Verified:</p>
 <ul>
 <li>Go to Project - your project</li>
@@ -155,18 +211,29 @@ Add the following text to the end of this file:</p>
 </ul>
 <h2>Submodules</h2>
 <p>Add a submodule to your project:</p>
-<pre class="language-git"><code class="language-git">git submodule add https://github.com/Microsoft/vcpkg<br>git add .gitmodules vcpkg/<br>git commit -m <span class="token string">"added submodule"</span></code></pre>
+<pre class="language-git"><code class="language-git">git submodule add https://github.com/Microsoft/vcpkg
+git add .gitmodules vcpkg/
+git commit -m <span class="token string">"added submodule"</span></code></pre>
 <p>The strucuture of a .gitmodules file is similar to:</p>
-<pre class="language-text"><code class="language-text">[submodule "sub/subproject"]<br>	path = sub/subproject<br>	url = ../subproject</code></pre>
+<pre class="language-text"><code class="language-text">[submodule "sub/subproject"]
+	path = sub/subproject
+	url = ../subproject</code></pre>
 <p>or</p>
-<pre class="language-text"><code class="language-text">[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter"]<br>	path = analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter<br>	url = https://gitlab.com/trace-validation/requirement-converter.git<br>[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator"]<br>	path = analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator</code></pre>
+<pre class="language-text"><code class="language-text">[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter"]
+	path = analyses/org.eclipse.tracecompass.incubator.validator.core/requirement_converter
+	url = https://gitlab.com/trace-validation/requirement-converter.git
+[submodule "analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator"]
+	path = analyses/org.eclipse.tracecompass.incubator.validator.core/trace_validator</code></pre>
 <p>Clone a project with submodules:</p>
-<pre class="language-git"><code class="language-git">git clone /url/to/repo/with/submodules<br>git submodule init<br>git submodule update</code></pre>
+<pre class="language-git"><code class="language-git">git clone /url/to/repo/with/submodules
+git submodule init
+git submodule update</code></pre>
 <h2>Git lfs and Artifactory</h2>
 <p><a href="https://help.sonatype.com/repomanager3/formats/git-lfs-repositories">TODO</a></p>
 <h2>Docker</h2>
 <p>Build an image from Dockerfile:</p>
-<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>folder containing Dockerfile + cross compiler <span class="token keyword">for</span> powerpc<span class="token operator">></span><br><span class="token function">docker</span> build --build-arg <span class="token assign-left variable">win_user</span><span class="token operator">=</span>frobino <span class="token parameter variable">-t</span> myimage:0.1 <span class="token builtin class-name">.</span></code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">cd</span> <span class="token operator">&lt;</span>folder containing Dockerfile + cross compiler <span class="token keyword">for</span> powerpc<span class="token operator">></span>
+<span class="token function">docker</span> build --build-arg <span class="token assign-left variable">win_user</span><span class="token operator">=</span>frobino <span class="token parameter variable">-t</span> myimage:0.1 <span class="token builtin class-name">.</span></code></pre>
 <p>Configure and start container for the 1st time:</p>
 <pre class="language-bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">--name</span> frobino-container <span class="token parameter variable">-v</span> /home/frobino/git_wa:/mnt/git_wa <span class="token parameter variable">--user</span> frobino <span class="token parameter variable">-it</span> myimage:0.1 /bin/bash</code></pre>
 <p>Start container:</p>
@@ -182,7 +249,87 @@ Add the following text to the end of this file:</p>
 <p>List containers:</p>
 <pre class="language-bash"><code class="language-bash"><span class="token function">docker</span> <span class="token function">ps</span> <span class="token parameter variable">-a</span></code></pre>
 <p>Example of Dockerfile:</p>
-<pre class="language-bash"><code class="language-bash"><span class="token comment"># Initially tested with debian:testing.</span><br><span class="token comment"># To switch between testing and buster change the "sed" commands into "testing" or "buster"</span><br>FROM debian:buster<br>MAINTAINER frobino@kth.se<br><br><span class="token comment"># Setup proxy if needed:</span><br><span class="token comment"># ENV HTTP_PROXY "http://webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV HTTPS_PROXY "webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV http_proxy "http://webproxy.xxx.net:8080"</span><br><span class="token comment"># ENV NO_PROXY "localhost,127.0.0.1"</span><br><br><span class="token comment"># add non-free repos</span><br>RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://deb.debian.org/debian buster main#deb http://deb.debian.org/debian testing main contrib non-free#g"</span> /etc/apt/sources.list<br>RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://security.debian.org/debian-security buster/updates main##g"</span> /etc/apt/sources.list<br>RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://deb.debian.org/debian buster-updates main#deb http://deb.debian.org/debian testing-updates main contrib non-free#g"</span> /etc/apt/sources.list<br><span class="token comment"># RUN cat /etc/apt/sources.list</span><br><br>RUN <span class="token function">apt-get</span> update --allow-releaseinfo-change <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token punctuation">\</span><br>    <span class="token function">git</span> <span class="token punctuation">\</span><br>    gcc <span class="token punctuation">\</span><br>    gcc-multilib<br>    <span class="token comment"># How to install specific version:</span><br>    <span class="token comment"># libcunit1-dev=1.3.*</span><br><br>RUN dpkg --add-architecture i386<br>RUN <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token punctuation">\</span><br>    wine32<br><br><span class="token comment"># TODO: find a better way to install waf (e.g. host on Nexus)</span><br><br><span class="token comment"># RUN mkdir -p /home/Tools/waf-2.0.19 \</span><br><span class="token comment">#     &amp;&amp; curl -x webproxy.bt.bombardier.net:8080 -O https://waf.io/waf-2.0.19 \</span><br><span class="token comment">#     &amp;&amp; mv waf-2.0.19 /home/Tools/waf-2.0.19 &amp;&amp; cp /home/Tools/waf-2.0.19/waf-2.0.19 /home/Tools/waf-2.0.19/waf \</span><br><span class="token comment">#     &amp;&amp; chmod -R 777 /home/Tools/waf-2.0.19</span><br><br>RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /home/Tools/waf-2.0.14 <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> --no-check-certificate https://sites.google.com/site/francescosblogg/blog/wafbuildsystem/waf-2.0.14 <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">mv</span> waf-2.0.14 /home/Tools/waf-2.0.14 <span class="token operator">&amp;&amp;</span> <span class="token function">cp</span> /home/Tools/waf-2.0.14/waf-2.0.14 /home/Tools/waf-2.0.14/waf <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/Tools/waf-2.0.14<br><br><span class="token comment"># TODO: find a better way to install ppc compiler (e.g. host on Nexus)</span><br><span class="token comment"># /media/sf_C_DRIVE/git_wa/Tool_gcc_ppc_linux-$win_user/Tool_gcc_pcc_linux/powerpc-unknown-elf.tar.gz</span><br><br>COPY powerpc-unknown-elf-gcc4.9.4.tar.gz /home/Tools/<br>RUN <span class="token function">tar</span> xvf /home/Tools/powerpc-unknown-elf-gcc4.9.4.tar.gz <span class="token parameter variable">--directory</span> /home/Tools <span class="token punctuation">\</span><br>    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/Tools/powerpc-unknown-elf<br><br><span class="token comment"># Use parameter passed with the --build-arg flag:</span><br><span class="token comment"># Add windows username as generic parameter when starting the container</span><br>ARG <span class="token assign-left variable">win_user</span><span class="token operator">=</span>default_value<br>ENV <span class="token assign-left variable">env_var_name</span><span class="token operator">=</span><span class="token variable">$win_user</span><br><br><span class="token comment">## Setup env variables ##</span><br><br><span class="token comment"># $ docker build --build-arg win_user=a_value # [...]</span><br>ENV <span class="token assign-left variable">USERNAME</span><span class="token operator">=</span><span class="token variable">$win_user</span><br>ENV <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span>:/home/Tools/waf-2.0.14<br><br><span class="token comment">## CREATE $win_user USER ##</span><br><br><span class="token comment"># Create the home directory for the new app user.</span><br>RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /home/<span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span><br>    <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/<span class="token variable">$win_user</span><br><br><span class="token comment"># Create an $win_user user so our programs doesn't run as root.</span><br>RUN <span class="token function">groupadd</span> <span class="token parameter variable">-r</span> <span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span><br>    <span class="token function">useradd</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-g</span> <span class="token variable">$win_user</span> <span class="token parameter variable">-d</span> /home/<span class="token variable">$win_user</span> <span class="token parameter variable">-s</span> /sbin/nologin <span class="token parameter variable">-c</span> <span class="token string">"Docker image user"</span> <span class="token variable">$win_user</span><br><br><span class="token comment"># Set the home directory to our app user's home.</span><br>ENV <span class="token assign-left variable"><span class="token environment constant">HOME</span></span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span><br>ENV <span class="token assign-left variable">WINEARCH</span><span class="token operator">=</span>win32<br>ENV <span class="token assign-left variable">WINEPREFIX</span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span>/.wine<br><br><span class="token comment"># The following is only to show how to add aliases:</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-gcc=powerpc-linux-gnu-gcc' >> /home/$win_user/.bashrc</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ar=powerpc-linux-gnu-ar' >> /home/$win_user/.bashrc</span><br><span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ld=powerpc-linux-gnu-ld' >> /home/$win_user/.bashrc</span><br><br>RUN <span class="token function">chown</span> <span class="token parameter variable">-R</span> <span class="token variable">$win_user</span><span class="token builtin class-name">:</span><span class="token variable">$win_user</span> /home/<span class="token variable">$win_user</span><br><br>CMD <span class="token punctuation">[</span>“echo”,”Image created”<span class="token punctuation">]</span></code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Initially tested with debian:testing.</span>
+<span class="token comment"># To switch between testing and buster change the "sed" commands into "testing" or "buster"</span>
+FROM debian:buster
+MAINTAINER frobino@kth.se
+
+<span class="token comment"># Setup proxy if needed:</span>
+<span class="token comment"># ENV HTTP_PROXY "http://webproxy.xxx.net:8080"</span>
+<span class="token comment"># ENV HTTPS_PROXY "webproxy.xxx.net:8080"</span>
+<span class="token comment"># ENV http_proxy "http://webproxy.xxx.net:8080"</span>
+<span class="token comment"># ENV NO_PROXY "localhost,127.0.0.1"</span>
+
+<span class="token comment"># add non-free repos</span>
+RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://deb.debian.org/debian buster main#deb http://deb.debian.org/debian testing main contrib non-free#g"</span> /etc/apt/sources.list
+RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://security.debian.org/debian-security buster/updates main##g"</span> /etc/apt/sources.list
+RUN <span class="token function">sed</span> <span class="token parameter variable">-i</span> <span class="token string">"s#deb http://deb.debian.org/debian buster-updates main#deb http://deb.debian.org/debian testing-updates main contrib non-free#g"</span> /etc/apt/sources.list
+<span class="token comment"># RUN cat /etc/apt/sources.list</span>
+
+RUN <span class="token function">apt-get</span> update --allow-releaseinfo-change <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token punctuation">\</span>
+    <span class="token function">git</span> <span class="token punctuation">\</span>
+    gcc <span class="token punctuation">\</span>
+    gcc-multilib
+    <span class="token comment"># How to install specific version:</span>
+    <span class="token comment"># libcunit1-dev=1.3.*</span>
+
+RUN dpkg --add-architecture i386
+RUN <span class="token function">apt-get</span> update <span class="token operator">&amp;&amp;</span> <span class="token function">apt-get</span> <span class="token function">install</span> <span class="token parameter variable">-y</span> <span class="token punctuation">\</span>
+    wine32
+
+<span class="token comment"># TODO: find a better way to install waf (e.g. host on Nexus)</span>
+
+<span class="token comment"># RUN mkdir -p /home/Tools/waf-2.0.19 \</span>
+<span class="token comment">#     &amp;&amp; curl -x webproxy.bt.bombardier.net:8080 -O https://waf.io/waf-2.0.19 \</span>
+<span class="token comment">#     &amp;&amp; mv waf-2.0.19 /home/Tools/waf-2.0.19 &amp;&amp; cp /home/Tools/waf-2.0.19/waf-2.0.19 /home/Tools/waf-2.0.19/waf \</span>
+<span class="token comment">#     &amp;&amp; chmod -R 777 /home/Tools/waf-2.0.19</span>
+
+RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /home/Tools/waf-2.0.14 <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">wget</span> --no-check-certificate https://sites.google.com/site/francescosblogg/blog/wafbuildsystem/waf-2.0.14 <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">mv</span> waf-2.0.14 /home/Tools/waf-2.0.14 <span class="token operator">&amp;&amp;</span> <span class="token function">cp</span> /home/Tools/waf-2.0.14/waf-2.0.14 /home/Tools/waf-2.0.14/waf <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/Tools/waf-2.0.14
+
+<span class="token comment"># TODO: find a better way to install ppc compiler (e.g. host on Nexus)</span>
+<span class="token comment"># /media/sf_C_DRIVE/git_wa/Tool_gcc_ppc_linux-$win_user/Tool_gcc_pcc_linux/powerpc-unknown-elf.tar.gz</span>
+
+COPY powerpc-unknown-elf-gcc4.9.4.tar.gz /home/Tools/
+RUN <span class="token function">tar</span> xvf /home/Tools/powerpc-unknown-elf-gcc4.9.4.tar.gz <span class="token parameter variable">--directory</span> /home/Tools <span class="token punctuation">\</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/Tools/powerpc-unknown-elf
+
+<span class="token comment"># Use parameter passed with the --build-arg flag:</span>
+<span class="token comment"># Add windows username as generic parameter when starting the container</span>
+ARG <span class="token assign-left variable">win_user</span><span class="token operator">=</span>default_value
+ENV <span class="token assign-left variable">env_var_name</span><span class="token operator">=</span><span class="token variable">$win_user</span>
+
+<span class="token comment">## Setup env variables ##</span>
+
+<span class="token comment"># $ docker build --build-arg win_user=a_value # [...]</span>
+ENV <span class="token assign-left variable">USERNAME</span><span class="token operator">=</span><span class="token variable">$win_user</span>
+ENV <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span>:/home/Tools/waf-2.0.14
+
+<span class="token comment">## CREATE $win_user USER ##</span>
+
+<span class="token comment"># Create the home directory for the new app user.</span>
+RUN <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /home/<span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span>
+    <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> /home/<span class="token variable">$win_user</span>
+
+<span class="token comment"># Create an $win_user user so our programs doesn't run as root.</span>
+RUN <span class="token function">groupadd</span> <span class="token parameter variable">-r</span> <span class="token variable">$win_user</span> <span class="token operator">&amp;&amp;</span><span class="token punctuation">\</span>
+    <span class="token function">useradd</span> <span class="token parameter variable">-r</span> <span class="token parameter variable">-g</span> <span class="token variable">$win_user</span> <span class="token parameter variable">-d</span> /home/<span class="token variable">$win_user</span> <span class="token parameter variable">-s</span> /sbin/nologin <span class="token parameter variable">-c</span> <span class="token string">"Docker image user"</span> <span class="token variable">$win_user</span>
+
+<span class="token comment"># Set the home directory to our app user's home.</span>
+ENV <span class="token assign-left variable"><span class="token environment constant">HOME</span></span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span>
+ENV <span class="token assign-left variable">WINEARCH</span><span class="token operator">=</span>win32
+ENV <span class="token assign-left variable">WINEPREFIX</span><span class="token operator">=</span>/home/<span class="token variable">$win_user</span>/.wine
+
+<span class="token comment"># The following is only to show how to add aliases:</span>
+<span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-gcc=powerpc-linux-gnu-gcc' >> /home/$win_user/.bashrc</span>
+<span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ar=powerpc-linux-gnu-ar' >> /home/$win_user/.bashrc</span>
+<span class="token comment"># RUN echo 'alias powerpc-unknown-gnu-ld=powerpc-linux-gnu-ld' >> /home/$win_user/.bashrc</span>
+
+RUN <span class="token function">chown</span> <span class="token parameter variable">-R</span> <span class="token variable">$win_user</span><span class="token builtin class-name">:</span><span class="token variable">$win_user</span> /home/<span class="token variable">$win_user</span>
+
+CMD <span class="token punctuation">[</span>“echo”,”Image created”<span class="token punctuation">]</span></code></pre>
 
 
 <p><a href="/blog/">Home</a></p>
