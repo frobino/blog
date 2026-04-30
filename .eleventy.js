@@ -1,54 +1,50 @@
-const { DateTime } = require("luxon");
-const eleventyNavigationPlugin = require("@11ty/eleventy-navigation");
-const pluginSyntaxHighlight = require("@11ty/eleventy-plugin-syntaxhighlight");
+module.exports = async function(eleventyConfig) {
+  const pluginNavigation = await import("@11ty/eleventy-navigation");
+  const pluginSyntaxHighlight = await import("@11ty/eleventy-plugin-syntaxhighlight");
 
-module.exports = function(eleventyConfig) {
-  // syntax highlights in markdown files
-  eleventyConfig.addPlugin(pluginSyntaxHighlight);
-  // hierarchical navigation using "eleventyNavigation" in markdown files
-  eleventyConfig.addPlugin(eleventyNavigationPlugin);
+  eleventyConfig.addPlugin(pluginNavigation.default);
+  eleventyConfig.addPlugin(pluginSyntaxHighlight.default);
 
-  // Date:
-  eleventyConfig.addFilter("readableDate", dateObj => {
-    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat("dd LLL yyyy");
+  eleventyConfig.setDataDeepMerge(true);
+
+  eleventyConfig.addFilter("readableDate", (dateObj) => {
+    return dateObj.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" });
   });
 
-  eleventyConfig.addFilter('htmlDateString', (dateObj) => {
-    return DateTime.fromJSDate(dateObj, {zone: 'utc'}).toFormat('yyyy-LL-dd');
+  eleventyConfig.addFilter("htmlDateString", (dateObj) => {
+    return dateObj.toISOString().split("T")[0];
   });
 
-  // Tag functionality:
-  eleventyConfig.setDataDeepMerge(true); // enables to merge "tags"
-  eleventyConfig.addCollection("tagList", require("./_11ty/getTagList"));
+  eleventyConfig.addCollection("tagList", async function(collection) {
+    let tagSet = new Set();
+    for (const item of collection.getAll()) {
+      if ("tags" in item.data) {
+        for (const tag of item.data.tags) {
+          if (!["all", "nav", "post", "posts"].includes(tag)) {
+            tagSet.add(tag);
+          }
+        }
+      }
+    }
+    return [...tagSet];
+  });
 
-  // CSS:
   eleventyConfig.addPassthroughCopy("css");
-
-  // JS dependencies and JS scripts for posts:
   eleventyConfig.addPassthroughCopy("posts/**/*.js");
-  eleventyConfig.addPassthroughCopy({
-    "node_modules/chart.js/dist/Chart.min.css" : "assets/Chart.min.css",
-    "node_modules/chart.js/dist/Chart.min.js" : "assets/Chart.min.js"
-  });
-
-  // Images for posts
   eleventyConfig.addPassthroughCopy("posts/**/*.png");
-
-  // Special post
   eleventyConfig.addPassthroughCopy("posts/5/**/*.wav");
   eleventyConfig.addPassthroughCopy("posts/5/**/*.ogg");
   eleventyConfig.addPassthroughCopy("posts/5/**/*.mp3");
   eleventyConfig.addPassthroughCopy("posts/5/**/*.json");
   eleventyConfig.addPassthroughCopy("posts/5/**/*.map");
   eleventyConfig.addPassthroughCopy("posts/5/**/*.html");
-
-  // Get the first `n` elements of a collection. Used in index.njk
-  eleventyConfig.addFilter("head", (array, n) => {
-    if( n < 0 ) {
-      return array.slice(n);
-    }
-
-    return array.slice(0, n);
+  eleventyConfig.addPassthroughCopy({
+    "node_modules/chart.js/dist/Chart.min.css": "assets/Chart.min.css",
+    "node_modules/chart.js/dist/Chart.min.js": "assets/Chart.min.js"
   });
 
+  eleventyConfig.addFilter("head", (array, n) => {
+    if (n < 0) return array.slice(n);
+    return array.slice(0, n);
+  });
 };
