@@ -29,11 +29,17 @@ module.exports = async function(eleventyConfig) {
     return [...tagSet];
   });
 
-  // Posts collection: only .md files in posts/ subdirectories (no passthrough HTML like platformer)
+  // Only .md files in posts/ (not passthrough HTML like platformer/index.html)
+  // v3's getAll() doesn't preserve glob order, so sort by folder number
   eleventyConfig.addCollection("posts", (collection) =>
     collection
+      .getAll()
       .filter((item) => item.inputPath?.endsWith(".md") && item.inputPath.includes("/posts/"))
-      .sort((a, b) => b.date - a.date)
+      .sort((a, b) => {
+        const numA = parseInt(a.inputPath.match(/\/(\d+)\//)?.[1] || 0);
+        const numB = parseInt(b.inputPath.match(/\/(\d+)\//)?.[1] || 0);
+        return numA - numB;
+      })
   );
 
   eleventyConfig.addPassthroughCopy("css");
