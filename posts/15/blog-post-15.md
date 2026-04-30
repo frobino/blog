@@ -1,3 +1,12 @@
+---
+title: Intel PT notes.
+description: Notes on how to use intel-pt and some related tools.
+date: 2025-01-01
+tags:
+- intel-pt
+layout: "layouts/post.njk"
+---
+
 # Intel PT
 
 ```
