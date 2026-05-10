@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overclock Radxa 4c+.</title>
+    <meta name="Description" content="Notes on how to overclock a SBC.">
+    <!-- custom css, for style which is NOT present in the w3.css -->
+    <link rel="stylesheet" href="/blog/css/custom.css">
+    <!-- custom css used for eleventy language plugin -->
+    <link rel="stylesheet" href="/blog/css/prism-base16-monokai.dark.css">
+    <link rel="alternate" href="/blog/feed/feed.xml" type="application/atom+xml" title="Francesco&#39;s Blog">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Verdana">
+    <!-- css below is currently used only for hamburger button -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <style>
+    body,h1,h2,h3,h4,h5,h6 {font-family: "Verdana", sans-serif; font-size: 120%;}
+  </style>
+  <body class="w3-light-grey">
+
+    <!-- Navbar on medium and large screens (Hidden on small screens) -->
+    <div class="w3-top">
+      <div class="w3-bar w3-black w3-card">
+        <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+        <a href="/blog/" class="w3-bar-item w3-button w3-padding-large">Francesco&#39;s Blog</a>
+        <div class="w3-right">
+          <a href="/blog/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Home</a>
+          <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Archive</a>
+          <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">About Me</a>
+          <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large w3-hide-small">Search</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navbar on small screens (remove the onclick attribute if you want the navbar to always show on top of the content when clicking on the links) -->
+    <div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+      <a href="/blog/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Home</a>
+      <a href="/blog/posts/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Archive</a>
+      <a href="/blog/pages/about/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">About Me</a>
+      <a href="/blog/pages/search/" class="w3-bar-item w3-button w3-padding-large" onclick="myFunction()">Search</a>
+    </div>
+
+    <main class="tmpl-post w3-padding-64">
+      <!--
+      <div class="warning">
+        <ol>
+          <li>Edit the <code>_data/metadata.json</code> with your blog’s information.</li>
+          <li>(Optional) Edit <code>.eleventy.js</code> with your <a href="https://www.11ty.dev/docs/config/">configuration preferences</a>.</li>
+          <li>Delete this message from <code>_includes/layouts/base.njk</code>.</li>
+        </ol>
+        <p><em>This is an <a href="https://www.11ty.io/">Eleventy project</a> created from the <a href="https://github.com/11ty/eleventy-base-blog"><code>eleventy-base-blog</code> repo</a>.</em></p>
+      </div>
+      -->
+
+      <h1>Overclock Radxa 4c+.</h1>
+
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Check the running model</span>
+<span class="token function">cat</span> /proc/device-tree/model
+<span class="token operator">></span> Radxa ROCK 4C+
+<span class="token comment"># See what compatible strings the running DT has</span>
+<span class="token function">cat</span> /proc/device-tree/compatible <span class="token operator">|</span> <span class="token function">tr</span> <span class="token string">'\0'</span> <span class="token string">'\n'</span>
+<span class="token operator">></span> radxa,rock-4c-plus
+<span class="token operator">></span> rockchip,rk3399
+<span class="token comment"># List available rock4 DTBs</span>
+<span class="token function">ls</span> /boot/dtb/rockchip/ <span class="token operator">|</span> <span class="token function">grep</span> rock-4
+rk3399-rock-4c-plus.dtb
+rk3399-rock-4se.dtb
+<span class="token comment"># Check boot log for stb selection</span>
+<span class="token function">sudo</span> <span class="token function">dmesg</span> <span class="token operator">|</span> <span class="token function">grep</span> <span class="token parameter variable">-i</span> <span class="token string">"dtb\|fdt\|device tree\|rock"</span> <span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-20</span>
+<span class="token operator">></span> <span class="token punctuation">[</span>    <span class="token number">0.000000</span><span class="token punctuation">]</span> Linux version <span class="token number">6.12</span>.44-current-rockchip64 <span class="token punctuation">(</span>build@armbian<span class="token punctuation">)</span> <span class="token punctuation">(</span>aarch64-linux-gnu-gcc <span class="token punctuation">(</span>Ubuntu <span class="token number">13.3</span>.0-6ubuntu2~24.04<span class="token punctuation">)</span> <span class="token number">13.3</span>.0, GNU ld <span class="token punctuation">(</span>GNU Binutils <span class="token keyword">for</span> Ubuntu<span class="token punctuation">)</span> <span class="token number">2.42</span><span class="token punctuation">)</span> <span class="token comment">#1 SMP PREEMPT Thu Aug 28 14:31:16 UTC 2025</span>
+<span class="token operator">></span> <span class="token punctuation">[</span>    <span class="token number">0.000000</span><span class="token punctuation">]</span> Machine model: Radxa ROCK 4C+
+<span class="token operator">></span> <span class="token punctuation">[</span>    <span class="token number">0.090492</span><span class="token punctuation">]</span> rockchip-gpio ff720000.gpio: probed /pinctrl/gpio@ff720000
+<span class="token operator">></span> <span class="token punctuation">[</span>    <span class="token number">0.091314</span><span class="token punctuation">]</span> rockchip-gpio ff730000.gpio: probed /pinctrl/gpio@ff730000
+<span class="token operator">></span> <span class="token punctuation">[</span>    <span class="token number">0.092039</span><span class="token punctuation">]</span> rockchip-gpio ff780000.gpio: probed /pinctrl/gpio@ff780000</code></pre>
+<p>Backup and decompile:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Backup</span>
+<span class="token function">sudo</span> <span class="token function">cp</span> /boot/dtb/rockchip/rk3399-rock-4c-plus.dtb <span class="token punctuation">\</span>
+        /boot/dtb/rockchip/rk3399-rock-4c-plus.dtb.bak
+
+<span class="token comment"># Install dtc if needed</span>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> device-tree-compiler <span class="token parameter variable">-y</span>
+
+<span class="token comment"># Decompile</span>
+dtc <span class="token parameter variable">-I</span> dtb <span class="token parameter variable">-O</span> dts <span class="token punctuation">\</span>
+  /boot/dtb/rockchip/rk3399-rock-4c-plus.dtb <span class="token punctuation">\</span>
+  <span class="token parameter variable">-o</span> ~/rock4c_plus.dts <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null</code></pre>
+<p>Find the Big Core OPP table:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">grep</span> <span class="token parameter variable">-n</span> <span class="token string">"1512000000\|opp-table\|cluster1"</span> ~/rock4c_plus.dts <span class="token operator">|</span> <span class="token function">head</span> <span class="token parameter variable">-30</span></code></pre>
+<p>Go to line ~3613 (the <code>opp06</code> closing <code>};</code>) and add after it, <strong>before the table's closing <code>};</code></strong>:</p>
+<pre class="language-text"><code class="language-text">opp07 {
+	opp-hz = <0x00 0x5f5e1000>;
+	opp-microvolt = <0x11e1a4 0x11e1a4 0x1312d0>;
+};
+
+opp08 {
+	opp-hz = <0x00 0x6b49d200>;
+	opp-microvolt = <0x1194f0 0x1194f0 0x1312d0>;
+};</code></pre>
+<p>What these mean:</p>
+<table>
+<thead>
+<tr>
+<th>Entry</th>
+<th>Hex Hz</th>
+<th>Frequency</th>
+<th>Voltage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>opp07</td>
+<td>0x5f5e1000</td>
+<td>1,608 MHz</td>
+<td>1.172V</td>
+</tr>
+<tr>
+<td>opp08</td>
+<td>0x6b49d200</td>
+<td>1,800 MHz</td>
+<td>1.150V</td>
+</tr>
+</tbody>
+</table>
+<p>Recompile and Flash:</p>
+<pre class="language-bash"><code class="language-bash">dtc <span class="token parameter variable">-I</span> dts <span class="token parameter variable">-O</span> dtb ~/rock4c_plus.dts <span class="token punctuation">\</span>
+  <span class="token parameter variable">-o</span> ~/rk3399-rock-4c-plus-oc.dtb <span class="token operator"><span class="token file-descriptor important">2</span>></span>/dev/null
+
+<span class="token function">sudo</span> <span class="token function">cp</span> ~/rk3399-rock-4c-plus-oc.dtb <span class="token punctuation">\</span>
+  /boot/dtb/rockchip/rk3399-rock-4c-plus.dtb
+
+<span class="token function">sudo</span> <span class="token function">reboot</span></code></pre>
+<p>Verify that the new frequencies are available:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">cat</span> /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies</code></pre>
+<p>You should now see 1608000 and 1800000 in the list.</p>
+<p>Set them:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token builtin class-name">echo</span> performance <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
+<span class="token builtin class-name">echo</span> <span class="token number">1800000</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+<span class="token builtin class-name">echo</span> <span class="token number">1800000</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq</code></pre>
+<p>Make it persistant after reboot:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">nano</span> /etc/systemd/system/cpu-oc.service</code></pre>
+<p>Paste:</p>
+<pre class="language-text"><code class="language-text">[Unit]
+Description=CPU Overclock Settings
+After=multi-user.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '\
+  echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor && \
+  echo 1800000 | tee /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq && \
+  echo 1800000 | tee /sys/devices/system/cpu/cpu5/cpufreq/scaling_max_freq'
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+<p>Enable it:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token function">sudo</span> systemctl daemon-reload
+<span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> cpu-oc.service
+<span class="token function">sudo</span> systemctl start cpu-oc.service</code></pre>
+
+
+<p><a href="/blog/">Home</a></p>
+
+
+    </main>
+
+    <footer></footer>
+
+    <!-- Current page: /blog/posts/16/blog-post-16/ -->
+
+    <script>
+      // Used to toggle the menu on small screens when clicking on the menu button
+      function myFunction() {
+        var x = document.getElementById("navDemo");
+        if (x.className.indexOf("w3-show") == -1) {
+          x.className += " w3-show";
+        } else { 
+          x.className = x.className.replace(" w3-show", "");
+        }
+      }
+    </script>
+
+  </body>
+</html>
